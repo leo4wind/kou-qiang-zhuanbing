@@ -41,7 +41,6 @@ function handleMenuSelect(index: string) {
   <el-container class="app-shell">
     <el-aside width="184px" class="app-aside">
       <div class="brand">
-        <p class="eyebrow">口腔</p>
         <h1>专病库</h1>
       </div>
       <el-menu class="side-menu" :default-active="state.view" @select="handleMenuSelect">
@@ -88,7 +87,6 @@ function handleMenuSelect(index: string) {
     <el-container>
       <el-header class="app-header" height="112px">
         <div>
-          <p class="eyebrow">口腔 专病队列</p>
           <h2>{{ pageTitle }}</h2>
         </div>
         <CaseSummary />
