@@ -2,6 +2,7 @@
 import { Connection, DataBoard, DocumentChecked, Files, Monitor } from "@element-plus/icons-vue";
 import { computed } from "vue";
 
+import CaseSummary from "@/components/CaseSummary.vue";
 import { useCrfStore } from "@/composables/useCrfStore";
 import CohortCenterView from "@/views/CohortCenterView.vue";
 import CrfReviewView from "@/views/CrfReviewView.vue";
@@ -85,11 +86,12 @@ function handleMenuSelect(index: string) {
     </el-aside>
 
     <el-container>
-      <el-header class="app-header" height="56px">
+      <el-header class="app-header" height="112px">
         <div>
           <p class="eyebrow">口腔牙周科 专病队列</p>
           <h2>{{ pageTitle }}</h2>
         </div>
+        <CaseSummary />
       </el-header>
 
       <el-main class="app-main">
