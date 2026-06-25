@@ -88,7 +88,6 @@ function handleMenuSelect(index: string) {
     <el-container>
       <el-header class="app-header" height="112px">
         <div>
-          <p class="eyebrow">口腔牙周科 专病队列</p>
           <h2>{{ pageTitle }}</h2>
         </div>
         <CaseSummary />
