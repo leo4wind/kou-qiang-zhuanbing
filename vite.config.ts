@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: process.env.GITHUB_PAGES === "true" ? "/shengErTongPICU/" : "/",
+  base: process.env.GITHUB_PAGES === "true" ? "/kou-qiang-zhuanbing/" : "/",
   plugins: [vue()],
   resolve: {
     alias: {
