@@ -95,7 +95,7 @@ export const sourceEvidence: SourceEvidence[] = perioCases.flatMap((caseId) => {
         ? "已完成全口洁治+口腔卫生宣教。嘱6个月后复诊维护。"
         : "已完成全口龈下刮治+根面平整(SRP)，局部米诺环素凝胶置入。嘱3个月后复诊。",
       relatedFields: ["f040_治疗阶段", "f041_基础治疗内容", "f044_洁治日期", "f045_SRP日期"],
-      reviewStatus: caseId === "PERIO-2026-0402" || caseId === "PERIO-2026-0320" ? "已复核" : "待复核",
+      reviewStatus: caseId === "PERIO-2026-0402" || caseId === "PERIO-2026-0320" ? "已复核" as const : "待复核" as const,
     },
   ];
 });

@@ -316,7 +316,7 @@ const evidenceWithDevices = computed<SourceEvidence[]>(() => [
       fileUrl: report.fileName,
       previewTitle: report.previewTitle,
       extractedFields: report.extractedFields,
-      reviewStatus: report.status === "review_required" ? "待复核" : "已复核",
+      reviewStatus: report.status === "review_required" ? "待复核" as const : "已复核" as const,
     })),
 ]);
 
