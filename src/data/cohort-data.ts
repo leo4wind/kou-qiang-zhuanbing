@@ -769,16 +769,6 @@ export const patientLifecycles: PatientLifecycle[] = [
       { id: `${caseRecord.id}-lab`, stage: "门诊" as const, time: `2026-06-0${index + 1} 14:00`, title: "检验结果", description: "血清CRP/Aa检测出结果。", sourceSystem: "LIS/检验" },
     ],
   })),
-  ...cbctCaseRecords.map((caseRecord) => ({
-    id: `life-${caseRecord.id}`,
-    caseId: caseRecord.id,
-    cohortId: "cohort-cbct",
-    events: [
-      { id: `${caseRecord.id}-emr`, stage: "门诊" as const, time: "2026-04-30 09:00", title: "种植前初诊", description: "患者因种植修复需求就诊，开具CBCT检查单。", sourceSystem: "EMR/门诊病历" },
-      { id: `${caseRecord.id}-cbct`, stage: "门诊" as const, time: "2026-04-30 11:30", title: "CBCT扫描", description: "576层大视野CBCT完成，Imaging Sciences设备，120KVP/5mA。", sourceSystem: "影像/PACS", linkedFields: ["f031_影像类型"] },
-      { id: `${caseRecord.id}-post`, stage: "门诊" as const, time: "2026-04-30 14:00", title: "影像阅片与种植规划", description: "横断/冠状/矢状三维评估完成，种植位点骨量充足。", sourceSystem: "影像/PACS" },
-    ],
-  })),
 ];
 
 // ============================================================
@@ -1246,3 +1236,17 @@ export const cbctDeviceMappingFields: DeviceMappingField[] = [
     annotationRequired: true,
   },
 ];
+
+// ============================================================
+// 第三队列患者生命周期
+// ============================================================
+export const cbctPatientLifecycles: PatientLifecycle[] = cbctCaseRecords.map((caseRecord) => ({
+  id: `life-${caseRecord.id}`,
+  caseId: caseRecord.id,
+  cohortId: "cohort-cbct",
+  events: [
+    { id: `${caseRecord.id}-emr`, stage: "门诊" as const, time: "2026-04-30 09:00", title: "种植前初诊", description: "患者因种植修复需求就诊，开具CBCT检查单。", sourceSystem: "EMR/门诊病历" },
+    { id: `${caseRecord.id}-cbct`, stage: "门诊" as const, time: "2026-04-30 11:30", title: "CBCT扫描", description: "576层大视野CBCT完成，Imaging Sciences设备，120KVP/5mA。", sourceSystem: "影像/PACS", linkedFields: ["f031_影像类型"] },
+    { id: `${caseRecord.id}-post`, stage: "门诊" as const, time: "2026-04-30 14:00", title: "影像阅片与种植规划", description: "横断/冠状/矢状三维评估完成，种植位点骨量充足。", sourceSystem: "影像/PACS" },
+  ],
+}));

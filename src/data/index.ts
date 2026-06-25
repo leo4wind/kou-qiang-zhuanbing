@@ -21,6 +21,7 @@ export {
   cbctCrfTemplate,
   cbctDeviceMappingFields,
   cbctDeviceReports,
+  cbctPatientLifecycles,
   cbctRawTables,
   cbctSourceEvidence,
   cbctTrends,

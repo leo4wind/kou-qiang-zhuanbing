@@ -29,6 +29,7 @@ import {
   cbctCrfTemplate,
   cbctDeviceMappingFields,
   cbctDeviceReports,
+  cbctPatientLifecycles,
   cbctRawTables,
   cbctSourceEvidence,
   cbctTrends,
@@ -103,7 +104,7 @@ const allBedsideObservations = reactive([...structuredClone(bedsideObservations)
 const allCaseTrends = reactive([...structuredClone(caseTrends), ...structuredClone(perioTrends), ...structuredClone(cbctTrends)]);
 const allSourceEvidence = reactive([...structuredClone(sourceEvidence), ...structuredClone(perioSourceEvidence), ...structuredClone(cbctSourceEvidence)]);
 const allRawTables = reactive([...structuredClone(rawTables), ...structuredClone(perioRawTables), ...structuredClone(cbctRawTables)]);
-const allPatientLifecycles = reactive(structuredClone(patientLifecycles));
+const allPatientLifecycles = reactive([...structuredClone(patientLifecycles), ...structuredClone(cbctPatientLifecycles)]);
 const allDeviceMappingFields = reactive([...structuredClone(deviceMappingFields), ...structuredClone(perioDeviceMappingFields), ...structuredClone(cbctDeviceMappingFields)]);
 
 const state = reactive<AppState>({
