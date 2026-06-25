@@ -372,6 +372,50 @@ export const cohortProjects: CohortProject[] = [
     ],
     updatedAt: "2026-06-03 17:00",
   },
+  {
+    id: "cohort-cbct",
+    name: "口腔颌面CBCT影像评估队列",
+    disease: "口腔颌面疾病 / 种植评估",
+    owner: "王医生",
+    members: ["王医生", "李医生", "张研究员"],
+    status: "active",
+    crfTemplateId: "cbct-v1",
+    rules: {
+      id: "rule-cbct-root",
+      logic: "AND",
+      summary: "口腔颌面部CBCT检查 / 种植前评估 / 颌骨评估",
+      conditions: [
+        {
+          id: "rule-cbct-modality",
+          sourceSystem: "影像/PACS",
+          field: "检查类型",
+          operator: "contains",
+          value: "CBCT",
+          summary: "影像类型为CBCT（锥形束CT）",
+        },
+        {
+          id: "rule-cbct-indication",
+          sourceSystem: "EMR/门诊病历",
+          field: "牙周主诉",
+          operator: "contains",
+          value: "种植",
+          summary: "主诉包含种植/颌骨评估",
+        },
+      ],
+    },
+    candidateCount: 3,
+    enrolledCount: 1,
+    withdrawnCount: 0,
+    completion: 72,
+    pendingReviewCount: 8,
+    manualRequiredCount: 6,
+    deviceMissingCount: 0,
+    followupMissingCount: 0,
+    mainCauseDistribution: [
+      { label: "种植前CBCT评估", value: 1 },
+    ],
+    updatedAt: "2026-04-30 11:30",
+  },
 ];
 
 // ============================================================
@@ -491,6 +535,21 @@ export const screeningCandidates: ScreeningCandidate[] = [
     owner: "张医生",
     scannedAt: "2026-06-10 09:00",
     note: "缺乏家族史问诊记录，需补填问卷",
+  },
+  {
+    id: "cand-cbct-01",
+    patientId: "P-CT00018776",
+    cohortId: "cohort-cbct",
+    caseId: "CBCT-2026-0430",
+    demographics: "63岁 男",
+    diagnosis: "种植前评估 / 慢性牙周炎I期A级",
+    matchedRules: ["影像类型为CBCT", "主诉包含种植评估"],
+    evidence: ["CBCT DICOM 576层", "门诊病历"],
+    status: "enrolled",
+    owner: "王医生",
+    scannedAt: "2026-04-30 09:00",
+    handledAt: "2026-04-30 11:30",
+    note: "CBCT影像质量优秀，种植位点骨量充足，拟行46/47种植修复",
   },
 ];
 
@@ -710,6 +769,16 @@ export const patientLifecycles: PatientLifecycle[] = [
       { id: `${caseRecord.id}-lab`, stage: "门诊" as const, time: `2026-06-0${index + 1} 14:00`, title: "检验结果", description: "血清CRP/Aa检测出结果。", sourceSystem: "LIS/检验" },
     ],
   })),
+  ...cbctCaseRecords.map((caseRecord) => ({
+    id: `life-${caseRecord.id}`,
+    caseId: caseRecord.id,
+    cohortId: "cohort-cbct",
+    events: [
+      { id: `${caseRecord.id}-emr`, stage: "门诊" as const, time: "2026-04-30 09:00", title: "种植前初诊", description: "患者因种植修复需求就诊，开具CBCT检查单。", sourceSystem: "EMR/门诊病历" },
+      { id: `${caseRecord.id}-cbct`, stage: "门诊" as const, time: "2026-04-30 11:30", title: "CBCT扫描", description: "576层大视野CBCT完成，Imaging Sciences设备，120KVP/5mA。", sourceSystem: "影像/PACS", linkedFields: ["f031_影像类型"] },
+      { id: `${caseRecord.id}-post`, stage: "门诊" as const, time: "2026-04-30 14:00", title: "影像阅片与种植规划", description: "横断/冠状/矢状三维评估完成，种植位点骨量充足。", sourceSystem: "影像/PACS" },
+    ],
+  })),
 ];
 
 // ============================================================
@@ -825,5 +894,355 @@ export const exportJobs: ExportJob[] = [
     status: "finished",
     createdBy: "李医生",
     createdAt: "2026-03-28 09:00",
+  },
+];
+
+// ============================================================
+// 第三队列 CRF 模板：口腔颌面 CBCT 影像评估
+// ============================================================
+const cbctModules = [
+  mod("cbct_m01_patient", "患者基本信息", [
+    field("cbct_patient_name", "cbct_m01_patient", "患者基本信息", "患者姓名", ["RIS/登记"], "auto", "text", [], "DICOM (0010,0010)"),
+    field("cbct_patient_id", "cbct_m01_patient", "患者基本信息", "患者ID", ["RIS/登记"], "auto", "text"),
+    field("cbct_sex", "cbct_m01_patient", "患者基本信息", "性别", ["RIS/登记"], "auto", "select", ["男", "女"]),
+    field("cbct_dob", "cbct_m01_patient", "患者基本信息", "出生日期", ["RIS/登记"], "auto", "date"),
+    field("cbct_study_date", "cbct_m01_patient", "患者基本信息", "检查日期", ["影像/PACS"], "auto", "date", [], "DICOM (0008,0020)"),
+    field("cbct_study_time", "cbct_m01_patient", "患者基本信息", "检查时间", ["影像/PACS"], "auto", "text"),
+  ]),
+  mod("cbct_m02_scan", "扫描参数", [
+    field("cbct_manufacturer", "cbct_m02_scan", "扫描参数", "设备制造商", ["影像/PACS"], "auto", "text", [], "DICOM (0008,0070)"),
+    field("cbct_modality", "cbct_m02_scan", "扫描参数", "检查类型", ["影像/PACS"], "auto", "select", ["CBCT", "CT", "全景片"], "锥形束CT(CBCT) — 牙科/颌面专用CT"),
+    field("cbct_scan_mode", "cbct_m02_scan", "扫描参数", "扫描模式", ["影像/PACS"], "auto", "select", ["LANDSCAPE", "PORTRAIT", "STANDARD"]),
+    field("cbct_kvp", "cbct_m02_scan", "扫描参数", "管电压 (KVP)", ["影像/PACS"], "auto", "number"),
+    field("cbct_ma", "cbct_m02_scan", "扫描参数", "管电流 (mA)", ["影像/PACS"], "auto", "number"),
+    field("cbct_slice_thickness", "cbct_m02_scan", "扫描参数", "层厚 (mm)", ["影像/PACS"], "auto", "number"),
+    field("cbct_matrix", "cbct_m02_scan", "扫描参数", "重建矩阵", ["影像/PACS"], "auto", "text"),
+    field("cbct_pixel_spacing", "cbct_m02_scan", "扫描参数", "像素间距 (mm)", ["影像/PACS"], "auto", "text"),
+    field("cbct_fov", "cbct_m02_scan", "扫描参数", "扫描范围 FOV (mm³)", ["影像/PACS"], "auto", "text"),
+    field("cbct_num_slices", "cbct_m02_scan", "扫描参数", "切片数量", ["影像/PACS"], "auto", "number"),
+    field("cbct_voxel_size", "cbct_m02_scan", "扫描参数", "体素大小 (mm³)", ["影像/PACS"], "auto", "text"),
+    field("cbct_recon_dir", "cbct_m02_scan", "扫描参数", "重建方向", ["影像/PACS"], "auto", "select", ["Axial", "Coronal", "Sagittal"]),
+  ]),
+  mod("cbct_m03_image", "影像特征", [
+    field("cbct_hu_range", "cbct_m03_image", "影像特征", "HU值范围", ["影像/PACS"], "auto", "text"),
+    field("cbct_hu_mean", "cbct_m03_image", "影像特征", "平均HU值", ["影像/PACS"], "auto", "number"),
+    field("cbct_window_width", "cbct_m03_image", "影像特征", "窗宽", ["影像/PACS"], "review", "number"),
+    field("cbct_window_center", "cbct_m03_image", "影像特征", "窗位", ["影像/PACS"], "review", "number"),
+    field("cbct_compression", "cbct_m03_image", "影像特征", "图像压缩格式", ["影像/PACS"], "auto", "select", ["JPEG Lossless", "JPEG Lossy", "RLE", "Deflated", "Uncompressed"]),
+    field("cbct_storage_type", "cbct_m03_image", "影像特征", "像素存储类型", ["影像/PACS"], "auto", "select", ["16位无符号", "8位", "16位有符号"]),
+  ]),
+  mod("cbct_m04_views", "影像视图评估", [
+    field("cbct_axial_note", "cbct_m04_views", "影像视图评估", "横断位(Axial)评估", ["影像/PACS"], "review", "text", [], "评估横断面骨结构、牙槽嵴顶位置及骨质密度"),
+    field("cbct_coronal_note", "cbct_m04_views", "影像视图评估", "冠状位(Coronal)评估", ["影像/PACS"], "review", "text", [], "评估冠状面上下颌骨关系、窦底位置"),
+    field("cbct_sagittal_note", "cbct_m04_views", "影像视图评估", "矢状位(Sagittal)评估", ["影像/PACS"], "review", "text", [], "评估矢状面单牙位骨丧失、种植位点骨量"),
+    field("cbct_overview_note", "cbct_m04_views", "影像视图评估", "缩略图概览评估", ["影像/PACS"], "review", "text", [], "全层缩略图快速筛查病变"),
+  ]),
+  mod("cbct_m05_diagnosis", "影像诊断结论", [
+    field("cbct_finding", "cbct_m05_diagnosis", "影像诊断结论", "影像所见", ["影像/PACS"], "review", "text"),
+    field("cbct_diagnosis", "cbct_m05_diagnosis", "影像诊断结论", "影像诊断", ["影像/PACS", "EMR/门诊病历"], "review", "text"),
+    field("cbct_rec", "cbct_m05_diagnosis", "影像诊断结论", "建议", ["影像/PACS"], "review", "text"),
+    field("cbct_radiologist", "cbct_m05_diagnosis", "影像诊断结论", "报告医师", ["影像/PACS"], "manual", "text"),
+  ]),
+];
+
+export const cbctCrfTemplate: CrfTemplate = {
+  id: "cbct-v1",
+  name: "口腔颌面 CBCT 影像评估 CRF",
+  sourceFile: "口腔颌面CBCT影像学评估表单.xlsx",
+  moduleCount: cbctModules.length,
+  fieldCount: cbctModules.reduce((sum, m) => sum + m.fieldCount, 0),
+  sourceSystemCounts: {},
+  modules: cbctModules,
+  fields: cbctModules.flatMap((m) => m.fields),
+};
+
+// ============================================================
+// 第三队列病例：CHEN BENYU
+// ============================================================
+export const cbctCaseRecords: CaseRecord[] = [
+  {
+    id: "CBCT-2026-0430",
+    bed: "影像-03",
+    demographics: "63岁 男",
+    diagnosis: "口腔颌面部CBCT评估 / 种植规划",
+    owner: "王医生",
+    updatedAt: "2026-04-30 11:30",
+    completion: 72,
+    statusCounts: {
+      auto_filled: 18,
+      review_required: 8,
+      manual_required: 3,
+      missing: 0,
+      source_unclear: 0,
+      file_review_required: 4,
+    },
+    values: {
+      "f001_年龄": { value: "63", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f002_性别": { value: "男", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f003_首诊日期": { value: "2026-04-30", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f004_牙周主诉": { value: "种植前影像评估", status: "review_required", confirmedBy: "王医生", updatedAt: "2026-04-30 11:30" },
+      "f005_刷牙频率": { value: "≥2次/天", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f006_牙线使用": { value: "偶尔使用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f007_漱口水使用": { value: "不使用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f008_最近洁治": { value: "6-12月", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f009_吸烟史": { value: "从不吸烟", status: "review_required", confirmedBy: "王医生", updatedAt: "2026-04-30 11:30" },
+      "f010_吸烟量": { value: "不适用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f011_糖尿病史": { value: "无", status: "review_required", confirmedBy: "王医生", updatedAt: "2026-04-30 11:30" },
+      "f012_HbA1c": { value: "5.4", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f013_家族史": { value: "不详", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f014_PD均值": { value: "3.0", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f015_CAL均值": { value: "2.5", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f016_BOP阳性率": { value: "30", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f017_REC均值": { value: "1.0", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f018_PDge5mm位点数": { value: "2", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f019_最大PD": { value: "6", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f020_最大CAL": { value: "5", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f021_最大REC": { value: "2", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f022_最重牙位": { value: "36", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f023_PLI": { value: "1", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f024_GI": { value: "1", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f025_OHIS": { value: "1.5", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f026_BI": { value: "2", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f027_松动度": { value: "无", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f028_根分叉病变": { value: "无", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f029_根分叉受累牙数": { value: "0", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f030_咬合创伤": { value: "无", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f031_影像类型": { value: "CBCT", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f032_骨吸收程度": { value: "轻度水平吸收", status: "review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f033_骨缺损形态": { value: "水平吸收", status: "file_review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f034_骨丧失百分比": { value: "15", status: "file_review_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f035_余留牙数": { value: "28", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f036_牙周诊断类型": { value: "慢性牙周炎（I期A级）", status: "review_required", confirmedBy: "王医生", updatedAt: "2026-04-30 11:30" },
+      "f037_分期": { value: "I期", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f038_分级": { value: "A级（慢速进展）", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f039_诊断依据": { value: "63岁患者，轻度水平骨吸收，BOP 30%，CAL≤3mm，口卫良好。CBCT用于种植前评估。", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f040_治疗阶段": { value: "种植前评估", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f041_基础治疗内容": { value: "口腔卫生宣教(OHI)", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f042_手术指征": { value: "种植修复待评估", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f043_维护间隔": { value: "6个月", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f044_洁治日期": { value: "2026-03-15", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f045_SRP日期": { value: "不适用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f046_SRP象限数": { value: "不适用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f047_局部用药": { value: "未使用", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f048_手术类型": { value: "未行手术", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f049_手术日期": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f050_手术牙位": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f051_术后用药": { value: "未使用", status: "auto_filled", confirmedBy: "系统", updatedAt: "2026-04-30 11:30" },
+      "f052_3月复查日期": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f053_3月PD变化": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f054_6月复查日期": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f055_6月CAL变化": { value: "", status: "missing", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+      "f056_12月结局": { value: "未到随访时间", status: "manual_required", confirmedBy: "", updatedAt: "2026-04-30 11:30" },
+    },
+  },
+];
+
+// ============================================================
+// 第三队列设备报告：CBCT
+// ============================================================
+export const cbctDeviceReports: DeviceReport[] = cbctCaseRecords.flatMap((caseRecord) => [
+  {
+    id: `${caseRecord.id}-cbct-axis`,
+    caseId: caseRecord.id,
+    deviceName: "CBCT",
+    system: "影像/PACS",
+    fileName: "axial_bone.png",
+    fileType: "图片" as const,
+    reportTime: "2026-04-30 11:30",
+    status: "uploaded" as const,
+    previewTitle: "CBCT 横断位 (Axial) — 骨窗",
+    conclusion: "中间层面横断位，骨窗显示（WW3200/WL600）。可见上下颌骨形态，牙槽嵴高度正常，无明显骨缺损。",
+    extractedFields: [
+      { label: "图像尺寸", value: "800×800", unit: "px" },
+      { label: "窗宽/窗位", value: "3200/600", unit: "HU" },
+      { label: "层厚", value: "0.200", unit: "mm" },
+    ],
+    relatedFields: ["f031_影像类型", "f034_骨丧失百分比", "f033_骨缺损形态"],
+  },
+  {
+    id: `${caseRecord.id}-cbct-coronal`,
+    caseId: caseRecord.id,
+    deviceName: "CBCT",
+    system: "影像/PACS",
+    fileName: "coronal_bone.png",
+    fileType: "图片" as const,
+    reportTime: "2026-04-30 11:30",
+    status: "uploaded" as const,
+    previewTitle: "CBCT 冠状位 (Coronal) — 骨窗",
+    conclusion: "冠状位重建，左右侧颌骨对称，上颌窦底清晰，可用于评估种植可用骨高度。",
+    extractedFields: [
+      { label: "重建方向", value: "冠状位" },
+      { label: "体素大小", value: "0.200×0.200×0.200", unit: "mm³" },
+    ],
+    relatedFields: ["f031_影像类型", "f034_骨丧失百分比"],
+  },
+  {
+    id: `${caseRecord.id}-cbct-sagittal`,
+    caseId: caseRecord.id,
+    deviceName: "CBCT",
+    system: "影像/PACS",
+    fileName: "sagittal_bone.png",
+    fileType: "图片" as const,
+    reportTime: "2026-04-30 11:30",
+    status: "uploaded" as const,
+    previewTitle: "CBCT 矢状位 (Sagittal) — 骨窗",
+    conclusion: "矢状位重建，可逐牙位评估牙槽骨高度和宽度，适用于种植位点术前测量。",
+    extractedFields: [
+      { label: "重建方向", value: "矢状位" },
+      { label: "FOV", value: "160×160×115", unit: "mm³" },
+    ],
+    relatedFields: ["f031_影像类型", "f032_骨吸收程度"],
+  },
+  {
+    id: `${caseRecord.id}-cbct-montage`,
+    caseId: caseRecord.id,
+    deviceName: "CBCT",
+    system: "影像/PACS",
+    fileName: "slice_montage_bone.png",
+    fileType: "图片" as const,
+    reportTime: "2026-04-30 11:30",
+    status: "uploaded" as const,
+    previewTitle: "CBCT 64层缩略图概览 (Slice Montage)",
+    conclusion: "共576层CBCT切片的64层均匀采样缩略图概览，可快速筛查异常层面。",
+    extractedFields: [
+      { label: "总切片数", value: "576" },
+      { label: "概览采样", value: "64", unit: "层" },
+    ],
+    relatedFields: ["f031_影像类型", "f034_骨丧失百分比"],
+  },
+]);
+
+// ============================================================
+// 第三队列趋势数据
+// ============================================================
+export const cbctTrends: CaseTrend[] = cbctCaseRecords.map((caseRecord) => ({
+  caseId: caseRecord.id,
+  points: [
+    { time: "2026-04-30 11:00", heartRate: 72, map: 95, temperature: 36.5 },
+    { time: "2026-04-30 11:30", heartRate: 70, map: 93, temperature: 36.5 },
+    { time: "2026-04-30 12:00", heartRate: 68, map: 92, temperature: 36.4 },
+  ],
+  events: [
+    { time: "2026-04-30 11:30", label: "CBCT扫描", value: "576层/160mmFOV", system: "影像/PACS" },
+    { time: "2026-04-30 11:52", label: "影像后处理", value: "MIP重建完成", system: "影像/PACS" },
+  ],
+}));
+
+// ============================================================
+// 第三队列床旁观察
+// ============================================================
+export const cbctBedsideObservations: BedsideObservation[] = cbctCaseRecords.flatMap((caseRecord) => [
+  {
+    id: `${caseRecord.id}-cbct-quality`,
+    caseId: caseRecord.id,
+    label: "CBCT图像质量",
+    value: "优秀",
+    unit: "",
+    observedAt: "2026-04-30 11:30",
+    observer: "王医生",
+    source: "影像/PACS",
+    status: "auto_filled",
+  },
+  {
+    id: `${caseRecord.id}-artifact`,
+    caseId: caseRecord.id,
+    label: "金属伪影",
+    value: "无",
+    unit: "",
+    observedAt: "2026-04-30 11:30",
+    observer: "王医生",
+    source: "影像/PACS",
+    status: "auto_filled",
+  },
+]);
+
+// ============================================================
+// 第三队列来源证据
+// ============================================================
+export const cbctSourceEvidence: SourceEvidence[] = cbctCaseRecords.flatMap((caseRecord) => [
+  {
+    id: `${caseRecord.id}-ev-cbct-report`,
+    caseId: caseRecord.id,
+    system: "影像/PACS",
+    title: "CBCT DICOM 影像数据",
+    time: "2026-04-30 11:30",
+    snippet: "576层CBCT扫描完成，管电压120KVP/5mA，FOV 160×160×115mm，层厚0.200mm。HU范围-1000~7544，骨窗WW3200/WL600。JPEG Lossless压缩，16位无符号存储。",
+    relatedFields: ["f031_影像类型", "f034_骨丧失百分比", "f033_骨缺损形态", "f032_骨吸收程度"],
+    fileType: "PDF",
+    fileUrl: "/mock/cbct/CBCT-2026-0430/dicom_report.pdf",
+    previewTitle: "DICOM影像分析报告",
+    extractedFields: [
+      { label: "HU范围", value: "-1000 ~ 7544", unit: "HU" },
+      { label: "片数", value: "576" },
+      { label: "层厚", value: "0.200", unit: "mm" },
+    ],
+    reviewStatus: "已复核" as const,
+  },
+  {
+    id: `${caseRecord.id}-ev-emr`,
+    caseId: caseRecord.id,
+    system: "EMR/门诊病历",
+    title: "门诊病历-种植前评估",
+    time: "2026-04-30 09:00",
+    snippet: "患者CHEN BENYU（陈本禹），63岁男性，CT00018776，因种植修复需求行术前CBCT检查。口腔卫生良好，牙周状况稳定，拟评估46/47种植位点。",
+    relatedFields: ["f001_年龄", "f002_性别", "f004_牙周主诉", "f036_牙周诊断类型"],
+    fileType: "PDF",
+    fileUrl: "/mock/cbct/CBCT-2026-0430/emr.pdf",
+    previewTitle: "门诊病历",
+    reviewStatus: "已复核" as const,
+  },
+]);
+
+// ============================================================
+// 第三队列原始资料表
+// ============================================================
+export const cbctRawTables: RawTable[] = cbctCaseRecords.flatMap((caseRecord) => [
+  {
+    id: "patient_profile",
+    caseId: caseRecord.id,
+    name: "基本信息",
+    system: "RIS/登记",
+    columns: ["字段", "值", "来源"],
+    rows: [
+      { 字段: "姓名", 值: "CHEN^BENYU (陈本禹)", 来源: "DICOM (0010,0010)" },
+      { 字段: "患者ID", 值: "CT00018776", 来源: "DICOM (0010,0020)" },
+      { 字段: "性别", 值: "男", 来源: "DICOM (0010,0040)" },
+      { 字段: "出生日期", 值: "1963-07-05", 来源: "DICOM (0010,0030)" },
+    ],
+    linkedFields: ["f001_年龄", "f002_性别"],
+  },
+  {
+    id: "exam_reports",
+    caseId: caseRecord.id,
+    name: "影像检查",
+    system: "影像/PACS",
+    columns: ["项目", "值"],
+    rows: [
+      { 项目: "检查日期", 值: "2026-04-30" },
+      { 项目: "检查类型", 值: "CBCT（锥形束CT）" },
+      { 项目: "设备", 值: "Imaging Sciences International" },
+      { 项目: "FOV", 值: "160×160×115 mm" },
+      { 项目: "层厚", 值: "0.200 mm" },
+      { 项目: "切片数", 值: "576" },
+    ],
+    linkedFields: ["f031_影像类型", "f034_骨丧失百分比"],
+  },
+]);
+
+// ============================================================
+// 第三队列设备映射字段
+// ============================================================
+export const cbctDeviceMappingFields: DeviceMappingField[] = [
+  {
+    id: "dmap-cbct-dicom",
+    module: "CBCT影像评估",
+    label: "CBCT DICOM 多视图分析",
+    options: [],
+    sourceSystems: ["影像/PACS"],
+    dataSource: "CBCT DICOM原始切层",
+    rootSource: "CBCT 原始DICOM数据 (576层)",
+    inputMode: "file_review",
+    notes: "需在CBCT阅片软件中逐层/逐视图评估骨量、骨密度和关键解剖结构",
+    annotationRequired: true,
   },
 ];

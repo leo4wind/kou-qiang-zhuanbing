@@ -24,6 +24,14 @@ import {
   perioRawTables,
   perioSourceEvidence,
   perioTrends,
+  cbctBedsideObservations,
+  cbctCaseRecords,
+  cbctCrfTemplate,
+  cbctDeviceMappingFields,
+  cbctDeviceReports,
+  cbctRawTables,
+  cbctSourceEvidence,
+  cbctTrends,
 } from "@/data";
 import type {
   CandidateStatus,
@@ -63,6 +71,7 @@ interface AppState {
 const templates: Record<string, CrfTemplate> = {
   [crfTemplate.id]: crfTemplate,
   [perioCrfTemplate.id]: perioCrfTemplate,
+  [cbctCrfTemplate.id]: cbctCrfTemplate,
 };
 
 const mainCases = structuredClone(caseRecords).map((caseRecord, index) => ({
@@ -73,19 +82,29 @@ const mainCases = structuredClone(caseRecords).map((caseRecord, index) => ({
   qualityStatus: index === 2 ? "data_missing" : "pending_review",
 })) satisfies CaseRecord[];
 
-const cases = reactive<CaseRecord[]>([...mainCases, ...structuredClone(perioCaseRecords)]);
+const cases = reactive<CaseRecord[]>([
+  ...mainCases,
+  ...structuredClone(perioCaseRecords),
+  ...structuredClone(cbctCaseRecords).map((c) => ({
+    ...c,
+    cohortId: "cohort-cbct",
+    patientLifecycleId: `life-${c.id}`,
+    enrollmentStatus: "enrolled" as const,
+    qualityStatus: "pending_review" as const,
+  })),
+]);
 const cohorts = reactive<CohortProject[]>(structuredClone(cohortProjects));
 const candidates = reactive<ScreeningCandidate[]>(structuredClone(screeningCandidates));
 const queryTemplates = reactive(structuredClone(cohortQueryTemplates));
 const exportJobs = reactive(structuredClone(exportJobSeed));
 
-const allDeviceReports = reactive([...structuredClone(deviceReports), ...structuredClone(perioDeviceReports)]);
-const allBedsideObservations = reactive([...structuredClone(bedsideObservations), ...structuredClone(perioBedsideObservations)]);
-const allCaseTrends = reactive([...structuredClone(caseTrends), ...structuredClone(perioTrends)]);
-const allSourceEvidence = reactive([...structuredClone(sourceEvidence), ...structuredClone(perioSourceEvidence)]);
-const allRawTables = reactive([...structuredClone(rawTables), ...structuredClone(perioRawTables)]);
+const allDeviceReports = reactive([...structuredClone(deviceReports), ...structuredClone(perioDeviceReports), ...structuredClone(cbctDeviceReports)]);
+const allBedsideObservations = reactive([...structuredClone(bedsideObservations), ...structuredClone(perioBedsideObservations), ...structuredClone(cbctBedsideObservations)]);
+const allCaseTrends = reactive([...structuredClone(caseTrends), ...structuredClone(perioTrends), ...structuredClone(cbctTrends)]);
+const allSourceEvidence = reactive([...structuredClone(sourceEvidence), ...structuredClone(perioSourceEvidence), ...structuredClone(cbctSourceEvidence)]);
+const allRawTables = reactive([...structuredClone(rawTables), ...structuredClone(perioRawTables), ...structuredClone(cbctRawTables)]);
 const allPatientLifecycles = reactive(structuredClone(patientLifecycles));
-const allDeviceMappingFields = reactive([...structuredClone(deviceMappingFields), ...structuredClone(perioDeviceMappingFields)]);
+const allDeviceMappingFields = reactive([...structuredClone(deviceMappingFields), ...structuredClone(perioDeviceMappingFields), ...structuredClone(cbctDeviceMappingFields)]);
 
 const state = reactive<AppState>({
   view: "home",

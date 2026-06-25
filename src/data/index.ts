@@ -16,6 +16,14 @@ export {
   perioRawTables,
   perioSourceEvidence,
   perioTrends,
+  cbctBedsideObservations,
+  cbctCaseRecords,
+  cbctCrfTemplate,
+  cbctDeviceMappingFields,
+  cbctDeviceReports,
+  cbctRawTables,
+  cbctSourceEvidence,
+  cbctTrends,
 } from "./cohort-data";
 export { inputModeLabels, statusLabels } from "./status-labels";
 import { patientProfile } from "./raw/patient-profile";
