@@ -4,7 +4,7 @@ import { ArrowRight, Connection, DataAnalysis, DataBoard, DocumentChecked, Files
 import { useCrfStore } from "@/composables/useCrfStore";
 import type { ViewName } from "@/types";
 
-const { cohorts, currentCohort, setView } = useCrfStore();
+const { cohorts, currentCohort, selectCohort, setView, state } = useCrfStore();
 
 const flowSteps = [
   { title: "设备对接", desc: "对接 Florida电子探针 / CBCT / 口内扫描仪 / 全景X光机等设备，上传 PDF / DICOM / STL 等源文件。" },
@@ -42,7 +42,9 @@ const modules: Array<{ title: string; desc: string; view: ViewName; icon: unknow
         </div>
         <div class="home-current-cohort">
           <span>当前队列</span>
-          <strong>{{ currentCohort.name }}</strong>
+          <el-select v-model="state.cohortId" style="width: 260px" @change="selectCohort(String($event), 'home')">
+            <el-option v-for="cohort in cohorts" :key="cohort.id" :label="cohort.name" :value="cohort.id" />
+          </el-select>
           <small>{{ currentCohort.disease }} · 入组 {{ currentCohort.enrolledCount }} 人 · 完成度 {{ currentCohort.completion }}%</small>
           <el-button type="primary" :icon="ArrowRight" @click="setView('cohorts')">进入项目/队列</el-button>
         </div>
