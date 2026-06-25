@@ -15,7 +15,7 @@ const exportPresets = [
   { label: "结构化 caseRecord", description: "CRF 字段值、状态、确认人、更新时间" },
   { label: "原始多表 rawTables", description: "EMR/LIS/PACS/护理/评分表/随访原始表" },
   { label: "SPSS 原型包", description: "CSV 数据 + .sps 变量标签/值标签脚本" },
-  { label: "多模态源文件包", description: "脑水肿仪、TCCD、TCD、脑电图、PACS 缩略图" },
+  { label: "多模态源文件包", description: "Florida 探针、CBCT、口内扫描、全景片、PACS 缩略图" },
 ];
 
 function firstCaseForTemplate(template?: QueryTemplate) {

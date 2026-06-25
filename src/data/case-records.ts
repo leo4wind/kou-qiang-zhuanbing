@@ -1,1852 +1,379 @@
 import type { CaseRecord } from "@/types";
 
-export const caseRecords = [
+export const caseRecords: CaseRecord[] = [
   {
-    "id": "PICU-2026-0503",
-    "bed": "PICU-03",
-    "demographics": "7岁 男",
-    "diagnosis": "感染性休克 / 肺部感染",
-    "owner": "李医生",
-    "updatedAt": "2026-05-03 09:22",
-    "completion": 77,
-    "statusCounts": {
-      "manual_required": 9,
-      "review_required": 14,
-      "auto_filled": 43,
-      "missing": 6,
-      "source_unclear": 2
-    },
-    "values": {
-      "f001_PICU结局_今日出院": {
-        "value": "存活",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f002_PICU结局_临床死亡": {
-        "value": "死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f003_PICU结局_自动出院_危重放弃治疗_转院": {
-        "value": "放弃治疗后死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f004_入PICU主要病因_疾病代码": {
-        "value": "血液系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f005_入PICU已伴有疾病__引发的疾病_疾病代码": {
-        "value": "泌尿系统疾病",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f006_基础疾病__本来就存在的疾病_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f007_基础疾病__本来就存在的疾病_有": {
-        "value": "免疫系统疾病",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f008_免疫抑制_无": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f009_免疫抑制_有": {
-        "value": "实体器官移植",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f010_家族史_无": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f011_家族史_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f014_SIRS_炎症反应_体温": {
-        "value": "发热（≥38.5℃）或低体温（≤36℃）",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f015_SIRS_炎症反应_心动过速": {
-        "value": "无，不超过120",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f016_SIRS_炎症反应_呼吸增加": {
-        "value": "有",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f017_SIRS_炎症反应_白细胞": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f018_感染指标_CRP": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f019_感染指标_PCT": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f020_感染指标_IL_1": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f021_感染指标_IL_2": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f022_感染指标_IL_6": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f023_感染指标_IL_8": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f024_感染指标_IL_10": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f025_感染指标_TNF_α": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f026_感染指标_INF_γ": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f027_感染指标_1_3_β_D葡聚糖": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f028_感染指标_GM": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f029_PSS评分_呼吸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f030_PSS评分_血管活性药物": {
-        "value": "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f031_PSS评分_平均动脉压": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f032_PSS评分_乳酸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f033_PSS评分_循环": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f034_PSS评分_凝血": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f035_PSS评分_神经": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f036_呼吸功能障碍_低氧血症": {
-        "value": "118",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f037_呼吸功能障碍_机械通气": {
-        "value": "0.8",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f038_呼吸功能障碍_有创机械通气_OIS指数": {
-        "value": "12.4",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f039_呼吸功能障碍_ARDS": {
-        "value": "145",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f040_心血管功能障碍_低血压_护理单上血压最低时候": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f042_神经功能障碍_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f043_神经功能障碍_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f044_血液系统功能障碍_无": {
-        "value": "未见异常",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f045_血液系统功能障碍_有": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f046_肾脏功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f047_肾脏功能障碍_有": {
-        "value": "血肌酐     umoL/L；",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f049_消化功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f050_消化功能障碍_有": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f051_消化功能障碍_肠鸣音消失": {
-        "value": "无",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f052_原发感染部位_具体疾病名称": {
-        "value": "血液",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f053_原发感染部位_原发疾病诊断日期": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f054_原发感染部位_病原来源": {
-        "value": "伤口",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f055_原发感染部位_具体病原结果": {
-        "value": "真菌（1白色念珠菌2曲霉菌属3其它）",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f056_入ICU1小时内PIM3评分_收缩压": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f057_入ICU1小时内PIM3评分_瞳孔反射": {
-        "value": "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f059_入ICU1小时内PIM3评分_碱剩余": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气": {
-        "value": "（未用＝0，使用＝1）",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f061_入ICU1小时内PIM3评分_是否为选择性入ICU": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f063_入ICU1小时内PIM3评分_低危诊断": {
-        "value": "［6］惊厥为入ICU主要原因",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f064_入ICU1小时内PIM3评分_高危诊断": {
-        "value": "［3］左心发育不全综合症",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f065_入ICU1小时内PIM3评分_极高风险诊断": {
-        "value": "［4］骨髓移植受者",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f066_实验室检查_血常规": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f067_实验室检查_肝功能": {
-        "value": "甘油三酯",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f068_实验室检查_凝血功能": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f069_实验室检查_电解质": {
-        "value": "氯(Cl-)",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f070_实验室检查_血气分析": {
-        "value": "碳酸氢根（HCO3-）",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f071_实验室检查_甲状腺功能": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f072_仪器检查_心电图": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f073_仪器检查_影像学": {
-        "value": "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-03 09:22"
-      },
-      "f074_治疗_复苏或CPR": {
-        "value": "○是 ○否",
-        "status": "auto_filled",
-        "confirmedBy": "李医生",
-        "updatedAt": "2026-05-03 09:22"
-      }
-    }
-  },
-  {
-    "id": "PICU-2026-0511",
-    "bed": "PICU-04",
-    "demographics": "2岁 女",
-    "diagnosis": "脓毒症 / 急性呼吸衰竭",
+    "id": "PERIO-2026-0301",
+    "bed": "牙周-01",
+    "demographics": "52岁 男",
+    "diagnosis": "慢性牙周炎（II期B级）",
     "owner": "王医生",
-    "updatedAt": "2026-05-11 14:05",
-    "completion": 76,
+    "updatedAt": "2026-03-01 09:15",
+    "completion": 82,
     "statusCounts": {
-      "manual_required": 9,
-      "review_required": 16,
-      "missing": 7,
-      "auto_filled": 40,
-      "source_unclear": 2
+      "manual_required": 10,
+      "review_required": 12,
+      "auto_filled": 28,
+      "missing": 4,
+      "source_unclear": 2,
+      "file_review_required": 5
     },
     "values": {
-      "f001_PICU结局_今日出院": {
-        "value": "存活",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f002_PICU结局_临床死亡": {
-        "value": "死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f003_PICU结局_自动出院_危重放弃治疗_转院": {
-        "value": "放弃治疗后死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f004_入PICU主要病因_疾病代码": {
-        "value": "血液系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f005_入PICU已伴有疾病__引发的疾病_疾病代码": {
-        "value": "泌尿系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f006_基础疾病__本来就存在的疾病_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f007_基础疾病__本来就存在的疾病_有": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f008_免疫抑制_无": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f009_免疫抑制_有": {
-        "value": "实体器官移植",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f010_家族史_无": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f011_家族史_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f014_SIRS_炎症反应_体温": {
-        "value": "发热（≥38.5℃）或低体温（≤36℃）",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f015_SIRS_炎症反应_心动过速": {
-        "value": "无，不超过120",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f016_SIRS_炎症反应_呼吸增加": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f017_SIRS_炎症反应_白细胞": {
-        "value": "36.8",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f018_感染指标_CRP": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f019_感染指标_PCT": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f020_感染指标_IL_1": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f021_感染指标_IL_2": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f022_感染指标_IL_6": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f023_感染指标_IL_8": {
-        "value": "未见异常",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f024_感染指标_IL_10": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f025_感染指标_TNF_α": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f026_感染指标_INF_γ": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f027_感染指标_1_3_β_D葡聚糖": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f028_感染指标_GM": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f029_PSS评分_呼吸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f030_PSS评分_血管活性药物": {
-        "value": "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f031_PSS评分_平均动脉压": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f032_PSS评分_乳酸": {
-        "value": "未见异常",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f033_PSS评分_循环": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f034_PSS评分_凝血": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f035_PSS评分_神经": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f036_呼吸功能障碍_低氧血症": {
-        "value": "118",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f037_呼吸功能障碍_机械通气": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f038_呼吸功能障碍_有创机械通气_OIS指数": {
-        "value": "12.4",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f039_呼吸功能障碍_ARDS": {
-        "value": "145",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f040_心血管功能障碍_低血压_护理单上血压最低时候": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显": {
-        "value": "2026-05-05",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f042_神经功能障碍_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f043_神经功能障碍_有": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f044_血液系统功能障碍_无": {
-        "value": "未见异常",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f045_血液系统功能障碍_有": {
-        "value": "0.8",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f046_肾脏功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f047_肾脏功能障碍_有": {
-        "value": "血肌酐     umoL/L；",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f049_消化功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f050_消化功能障碍_有": {
-        "value": "7.2",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f051_消化功能障碍_肠鸣音消失": {
-        "value": "无",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f052_原发感染部位_具体疾病名称": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f053_原发感染部位_原发疾病诊断日期": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f054_原发感染部位_病原来源": {
-        "value": "伤口",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f055_原发感染部位_具体病原结果": {
-        "value": "真菌（1白色念珠菌2曲霉菌属3其它）",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f056_入ICU1小时内PIM3评分_收缩压": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f057_入ICU1小时内PIM3评分_瞳孔反射": {
-        "value": "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f059_入ICU1小时内PIM3评分_碱剩余": {
-        "value": "92",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气": {
-        "value": "（未用＝0，使用＝1）",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f061_入ICU1小时内PIM3评分_是否为选择性入ICU": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f063_入ICU1小时内PIM3评分_低危诊断": {
-        "value": "［6］惊厥为入ICU主要原因",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f064_入ICU1小时内PIM3评分_高危诊断": {
-        "value": "［3］左心发育不全综合症",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f065_入ICU1小时内PIM3评分_极高风险诊断": {
-        "value": "［4］骨髓移植受者",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f066_实验室检查_血常规": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f067_实验室检查_肝功能": {
-        "value": "甘油三酯",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f068_实验室检查_凝血功能": {
-        "value": "2026-05-05",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f069_实验室检查_电解质": {
-        "value": "氯(Cl-)",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f070_实验室检查_血气分析": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f071_实验室检查_甲状腺功能": {
-        "value": "促甲状腺激素(TSH)",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f072_仪器检查_心电图": {
-        "value": "23.1",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f073_仪器检查_影像学": {
-        "value": "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      },
-      "f074_治疗_复苏或CPR": {
-        "value": "○是 ○否",
-        "status": "auto_filled",
-        "confirmedBy": "王医生",
-        "updatedAt": "2026-05-11 14:05"
-      }
+      "f001_年龄": { "value": "52", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 09:15" },
+      "f002_性别": { "value": "男", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 09:15" },
+      "f003_首诊日期": { "value": "2026-03-01", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 09:15" },
+      "f004_牙周主诉": { "value": "牙龈出血", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-01 09:15" },
+      "f005_刷牙频率": { "value": "1次/天", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 09:15" },
+      "f006_牙线使用": { "value": "从不使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 09:15" },
+      "f007_漱口水使用": { "value": "不使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 09:15" },
+      "f008_最近洁治": { "value": ">3年/从未", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-01 09:15" },
+      "f009_吸烟史": { "value": "当前吸烟", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-01 09:15" },
+      "f010_吸烟量": { "value": "10-20支", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 09:15" },
+      "f011_糖尿病史": { "value": "2型糖尿病(控制良好)", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-01 09:15" },
+      "f012_HbA1c": { "value": "6.8", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 09:15" },
+      "f013_家族史": { "value": "父母有牙周病史", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 09:15" },
+      "f014_PD均值": { "value": "4.2", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f015_CAL均值": { "value": "3.8", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f016_BOP阳性率": { "value": "65", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f017_REC均值": { "value": "1.5", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f018_PDge5mm位点数": { "value": "12", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f019_最大PD": { "value": "7", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f020_最大CAL": { "value": "6", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f021_最大REC": { "value": "3", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f022_最重牙位": { "value": "46", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f023_PLI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f024_GI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f025_OHIS": { "value": "3.5", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f026_BI": { "value": "3", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 10:30" },
+      "f027_松动度": { "value": "I度（水平<1mm）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f028_根分叉病变": { "value": "II度", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f029_根分叉受累牙数": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f030_咬合创伤": { "value": "有（继发性）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f031_影像类型": { "value": "全景片(OPG)", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 11:00" },
+      "f032_骨吸收程度": { "value": "轻中度（15%-33%）", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f033_骨缺损形态": { "value": "水平吸收", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f034_骨丧失百分比": { "value": "28", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:00" },
+      "f035_余留牙数": { "value": "27", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 11:00" },
+      "f036_牙周诊断类型": { "value": "慢性牙周炎", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-01 11:30" },
+      "f037_分期": { "value": "II期（中度）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f038_分级": { "value": "B级（中速进展）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f039_诊断依据": { "value": "最大CAL 6mm位于46远中，骨丧失28%，BOP 65%，吸烟+糖尿病为危险因素", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f040_治疗阶段": { "value": "初诊评估", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f041_基础治疗内容": { "value": "口腔卫生宣教(OHI), 全口洁治, 龈下刮治+根面平整(SRP)", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f042_手术指征": { "value": "有（PD≥5mm持续）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f043_维护间隔": { "value": "3个月", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f044_洁治日期": { "value": "2026-03-08", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-08 14:00" },
+      "f045_SRP日期": { "value": "2026-03-15", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-15 16:30" },
+      "f046_SRP象限数": { "value": "4（全口）", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-15 16:30" },
+      "f047_局部用药": { "value": "米诺环素凝胶", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-15 16:30" },
+      "f048_手术类型": { "value": "未行手术", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-05-01 08:00" },
+      "f049_手术日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f050_手术牙位": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f051_术后用药": { "value": "未使用", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-01 11:30" },
+      "f052_3月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f053_3月PD变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f054_6月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f055_6月CAL变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" },
+      "f056_12月结局": { "value": "未到随访时间", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-01 11:30" }
     }
   },
   {
-    "id": "PICU-2026-0520",
-    "bed": "PICU-05",
-    "demographics": "9月 男",
-    "diagnosis": "重症肺炎 / 免疫抑制待排",
-    "owner": "陈医生",
-    "updatedAt": "2026-05-20 18:40",
-    "completion": 77,
+    "id": "PERIO-2026-0312",
+    "bed": "牙周-03",
+    "demographics": "35岁 女",
+    "diagnosis": "侵袭性牙周炎（III期C级）",
+    "owner": "王医生",
+    "updatedAt": "2026-03-12 10:00",
+    "completion": 71,
     "statusCounts": {
-      "manual_required": 9,
-      "review_required": 13,
-      "auto_filled": 44,
+      "manual_required": 14,
+      "review_required": 10,
+      "auto_filled": 24,
       "missing": 6,
-      "source_unclear": 2
+      "source_unclear": 2,
+      "file_review_required": 5
     },
     "values": {
-      "f001_PICU结局_今日出院": {
-        "value": "存活",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f002_PICU结局_临床死亡": {
-        "value": "死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f003_PICU结局_自动出院_危重放弃治疗_转院": {
-        "value": "放弃治疗后死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f004_入PICU主要病因_疾病代码": {
-        "value": "血液系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f005_入PICU已伴有疾病__引发的疾病_疾病代码": {
-        "value": "泌尿系统疾病",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f006_基础疾病__本来就存在的疾病_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f007_基础疾病__本来就存在的疾病_有": {
-        "value": "免疫系统疾病",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f008_免疫抑制_无": {
-        "value": "未见异常",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f009_免疫抑制_有": {
-        "value": "实体器官移植",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f010_家族史_无": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f011_家族史_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有": {
-        "value": "2026-05-03",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f014_SIRS_炎症反应_体温": {
-        "value": "发热（≥38.5℃）或低体温（≤36℃）",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f015_SIRS_炎症反应_心动过速": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f016_SIRS_炎症反应_呼吸增加": {
-        "value": "有",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f017_SIRS_炎症反应_白细胞": {
-        "value": "36.8",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f018_感染指标_CRP": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f019_感染指标_PCT": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f020_感染指标_IL_1": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f021_感染指标_IL_2": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f022_感染指标_IL_6": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f023_感染指标_IL_8": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f024_感染指标_IL_10": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f025_感染指标_TNF_α": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f026_感染指标_INF_γ": {
-        "value": "未见异常",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f027_感染指标_1_3_β_D葡聚糖": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f028_感染指标_GM": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f029_PSS评分_呼吸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f030_PSS评分_血管活性药物": {
-        "value": "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f031_PSS评分_平均动脉压": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f032_PSS评分_乳酸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f033_PSS评分_循环": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f034_PSS评分_凝血": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f035_PSS评分_神经": {
-        "value": "未见异常",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f036_呼吸功能障碍_低氧血症": {
-        "value": "118",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f037_呼吸功能障碍_机械通气": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f038_呼吸功能障碍_有创机械通气_OIS指数": {
-        "value": "12.4",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f039_呼吸功能障碍_ARDS": {
-        "value": "145",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f040_心血管功能障碍_低血压_护理单上血压最低时候": {
-        "value": "2026-05-03",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f042_神经功能障碍_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f043_神经功能障碍_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f044_血液系统功能障碍_无": {
-        "value": "未见异常",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f045_血液系统功能障碍_有": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f046_肾脏功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f047_肾脏功能障碍_有": {
-        "value": "血肌酐     umoL/L；",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f049_消化功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f050_消化功能障碍_有": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f051_消化功能障碍_肠鸣音消失": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f052_原发感染部位_具体疾病名称": {
-        "value": "血液",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f053_原发感染部位_原发疾病诊断日期": {
-        "value": "2026-05-05",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f054_原发感染部位_病原来源": {
-        "value": "伤口",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f055_原发感染部位_具体病原结果": {
-        "value": "真菌（1白色念珠菌2曲霉菌属3其它）",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f056_入ICU1小时内PIM3评分_收缩压": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f057_入ICU1小时内PIM3评分_瞳孔反射": {
-        "value": "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2": {
-        "value": "7.2",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f059_入ICU1小时内PIM3评分_碱剩余": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f061_入ICU1小时内PIM3评分_是否为选择性入ICU": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f063_入ICU1小时内PIM3评分_低危诊断": {
-        "value": "［6］惊厥为入ICU主要原因",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f064_入ICU1小时内PIM3评分_高危诊断": {
-        "value": "［3］左心发育不全综合症",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f065_入ICU1小时内PIM3评分_极高风险诊断": {
-        "value": "［4］骨髓移植受者",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f066_实验室检查_血常规": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f067_实验室检查_肝功能": {
-        "value": "甘油三酯",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f068_实验室检查_凝血功能": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f069_实验室检查_电解质": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f070_实验室检查_血气分析": {
-        "value": "碳酸氢根（HCO3-）",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f071_实验室检查_甲状腺功能": {
-        "value": "促甲状腺激素(TSH)",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f072_仪器检查_心电图": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f073_仪器检查_影像学": {
-        "value": "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      },
-      "f074_治疗_复苏或CPR": {
-        "value": "○是 ○否",
-        "status": "auto_filled",
-        "confirmedBy": "陈医生",
-        "updatedAt": "2026-05-20 18:40"
-      }
+      "f001_年龄": { "value": "35", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 10:00" },
+      "f002_性别": { "value": "女", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 10:00" },
+      "f003_首诊日期": { "value": "2026-03-12", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 10:00" },
+      "f004_牙周主诉": { "value": "牙齿松动", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-12 10:00" },
+      "f005_刷牙频率": { "value": "≥2次/天", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f006_牙线使用": { "value": "每日使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f007_漱口水使用": { "value": "偶尔使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f008_最近洁治": { "value": "1-3年", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f009_吸烟史": { "value": "从不吸烟", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-12 10:00" },
+      "f010_吸烟量": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f011_糖尿病史": { "value": "无", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-12 10:00" },
+      "f012_HbA1c": { "value": "5.2", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 10:00" },
+      "f013_家族史": { "value": "兄弟姐妹有牙周病史", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 10:00" },
+      "f014_PD均值": { "value": "5.1", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f015_CAL均值": { "value": "5.8", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f016_BOP阳性率": { "value": "82", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f017_REC均值": { "value": "2.8", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f018_PDge5mm位点数": { "value": "18", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f019_最大PD": { "value": "10", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f020_最大CAL": { "value": "9", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f021_最大REC": { "value": "5", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f022_最重牙位": { "value": "36", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f023_PLI": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f024_GI": { "value": "3", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f025_OHIS": { "value": "2.0", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f026_BI": { "value": "4", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 11:00" },
+      "f027_松动度": { "value": "II度（水平1-2mm）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f028_根分叉病变": { "value": "III度", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f029_根分叉受累牙数": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f030_咬合创伤": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f031_影像类型": { "value": "CBCT", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 14:00" },
+      "f032_骨吸收程度": { "value": "中重度（>33%）", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f033_骨缺损形态": { "value": "垂直吸收", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f034_骨丧失百分比": { "value": "55", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-12 14:00" },
+      "f035_余留牙数": { "value": "24", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 14:00" },
+      "f036_牙周诊断类型": { "value": "侵袭性牙周炎", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-03-12 15:00" },
+      "f037_分期": { "value": "III期（重度伴牙缺失）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f038_分级": { "value": "C级（快速进展）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f039_诊断依据": { "value": "35岁即骨丧失55%远超年龄预期，就诊时已因牙周炎缺失3颗牙（16/26/46），最大CAL 9mm", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f040_治疗阶段": { "value": "初诊评估", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f041_基础治疗内容": { "value": "口腔卫生宣教(OHI), 全口洁治, 龈下刮治+根面平整(SRP), 药物治疗", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f042_手术指征": { "value": "有（骨缺损需再生）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f043_维护间隔": { "value": "3个月", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f044_洁治日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f045_SRP日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f046_SRP象限数": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f047_局部用药": { "value": "未使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f048_手术类型": { "value": "未行手术", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 15:00" },
+      "f049_手术日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f050_手术牙位": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f051_术后用药": { "value": "未使用", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-12 15:00" },
+      "f052_3月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f053_3月PD变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f054_6月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f055_6月CAL变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" },
+      "f056_12月结局": { "value": "未到随访时间", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-12 15:00" }
     }
   },
   {
-    "id": "PICU-2026-0528",
-    "bed": "PICU-06",
-    "demographics": "12岁 女",
-    "diagnosis": "腹腔感染 / 多器官功能障碍",
-    "owner": "周医生",
-    "updatedAt": "2026-05-28 11:16",
-    "completion": 74,
+    "id": "PERIO-2026-0320",
+    "bed": "牙周-05",
+    "demographics": "28岁 男",
+    "diagnosis": "慢性牙周炎（I期A级）/ 牙龈退缩",
+    "owner": "李医生",
+    "updatedAt": "2026-03-20 08:45",
+    "completion": 90,
     "statusCounts": {
-      "manual_required": 9,
-      "review_required": 15,
-      "missing": 8,
-      "auto_filled": 40,
-      "source_unclear": 2
+      "manual_required": 8,
+      "review_required": 8,
+      "auto_filled": 34,
+      "missing": 4,
+      "source_unclear": 1,
+      "file_review_required": 4
     },
     "values": {
-      "f001_PICU结局_今日出院": {
-        "value": "存活",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f002_PICU结局_临床死亡": {
-        "value": "死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f003_PICU结局_自动出院_危重放弃治疗_转院": {
-        "value": "放弃治疗后死亡",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f004_入PICU主要病因_疾病代码": {
-        "value": "血液系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f005_入PICU已伴有疾病__引发的疾病_疾病代码": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f006_基础疾病__本来就存在的疾病_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f007_基础疾病__本来就存在的疾病_有": {
-        "value": "免疫系统疾病",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f008_免疫抑制_无": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f009_免疫抑制_有": {
-        "value": "实体器官移植",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f010_家族史_无": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f011_家族史_有": {
-        "value": "92",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f014_SIRS_炎症反应_体温": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f015_SIRS_炎症反应_心动过速": {
-        "value": "无，不超过120",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f016_SIRS_炎症反应_呼吸增加": {
-        "value": "有",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f017_SIRS_炎症反应_白细胞": {
-        "value": "36.8",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f018_感染指标_CRP": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f019_感染指标_PCT": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f020_感染指标_IL_1": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f021_感染指标_IL_2": {
-        "value": "待复核",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f022_感染指标_IL_6": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f023_感染指标_IL_8": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f024_感染指标_IL_10": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f025_感染指标_TNF_α": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f026_感染指标_INF_γ": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f027_感染指标_1_3_β_D葡聚糖": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f028_感染指标_GM": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f029_PSS评分_呼吸": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f030_PSS评分_血管活性药物": {
-        "value": "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f031_PSS评分_平均动脉压": {
-        "value": "已记录",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f032_PSS评分_乳酸": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f033_PSS评分_循环": {
-        "value": "待复核",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f034_PSS评分_凝血": {
-        "value": "已记录",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f035_PSS评分_神经": {
-        "value": "未见异常",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f036_呼吸功能障碍_低氧血症": {
-        "value": "118",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f037_呼吸功能障碍_机械通气": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f038_呼吸功能障碍_有创机械通气_OIS指数": {
-        "value": "12.4",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f039_呼吸功能障碍_ARDS": {
-        "value": "145",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f040_心血管功能障碍_低血压_护理单上血压最低时候": {
-        "value": "2026-05-03",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f042_神经功能障碍_无": {
-        "value": "待复核",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f043_神经功能障碍_有": {
-        "value": "92",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f044_血液系统功能障碍_无": {
-        "value": "未见异常",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f045_血液系统功能障碍_有": {
-        "value": "0.8",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f046_肾脏功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f047_肾脏功能障碍_有": {
-        "value": "血肌酐     umoL/L；",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h": {
-        "value": "23.1",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f049_消化功能障碍_无": {
-        "value": "已记录",
-        "status": "manual_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f050_消化功能障碍_有": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f051_消化功能障碍_肠鸣音消失": {
-        "value": "无",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f052_原发感染部位_具体疾病名称": {
-        "value": "血液",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f053_原发感染部位_原发疾病诊断日期": {
-        "value": "2026-05-05",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f054_原发感染部位_病原来源": {
-        "value": "伤口",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f055_原发感染部位_具体病原结果": {
-        "value": "真菌（1白色念珠菌2曲霉菌属3其它）",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f056_入ICU1小时内PIM3评分_收缩压": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f057_入ICU1小时内PIM3评分_瞳孔反射": {
-        "value": "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2": {
-        "value": "7.2",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f059_入ICU1小时内PIM3评分_碱剩余": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气": {
-        "value": "（未用＝0，使用＝1）",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f061_入ICU1小时内PIM3评分_是否为选择性入ICU": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例": {
-        "value": "",
-        "status": "source_unclear",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f063_入ICU1小时内PIM3评分_低危诊断": {
-        "value": "［6］惊厥为入ICU主要原因",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f064_入ICU1小时内PIM3评分_高危诊断": {
-        "value": "［3］左心发育不全综合症",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f065_入ICU1小时内PIM3评分_极高风险诊断": {
-        "value": "［4］骨髓移植受者",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f066_实验室检查_血常规": {
-        "value": "7.2",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f067_实验室检查_肝功能": {
-        "value": "甘油三酯",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f068_实验室检查_凝血功能": {
-        "value": "",
-        "status": "missing",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f069_实验室检查_电解质": {
-        "value": "氯(Cl-)",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f070_实验室检查_血气分析": {
-        "value": "碳酸氢根（HCO3-）",
-        "status": "review_required",
-        "confirmedBy": "",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f071_实验室检查_甲状腺功能": {
-        "value": "促甲状腺激素(TSH)",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f072_仪器检查_心电图": {
-        "value": "23.1",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f073_仪器检查_影像学": {
-        "value": "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      },
-      "f074_治疗_复苏或CPR": {
-        "value": "○是 ○否",
-        "status": "auto_filled",
-        "confirmedBy": "周医生",
-        "updatedAt": "2026-05-28 11:16"
-      }
+      "f001_年龄": { "value": "28", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 08:45" },
+      "f002_性别": { "value": "男", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 08:45" },
+      "f003_首诊日期": { "value": "2026-03-20", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 08:45" },
+      "f004_牙周主诉": { "value": "牙龈退缩", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-20 08:45" },
+      "f005_刷牙频率": { "value": "≥2次/天", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 08:45" },
+      "f006_牙线使用": { "value": "偶尔使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 08:45" },
+      "f007_漱口水使用": { "value": "规律使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 08:45" },
+      "f008_最近洁治": { "value": "6-12个月", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-20 08:45" },
+      "f009_吸烟史": { "value": "从不吸烟", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-20 08:45" },
+      "f010_吸烟量": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 08:45" },
+      "f011_糖尿病史": { "value": "无", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-20 08:45" },
+      "f012_HbA1c": { "value": "5.0", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 08:45" },
+      "f013_家族史": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 08:45" },
+      "f014_PD均值": { "value": "2.8", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f015_CAL均值": { "value": "2.0", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f016_BOP阳性率": { "value": "25", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f017_REC均值": { "value": "1.0", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f018_PDge5mm位点数": { "value": "2", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f019_最大PD": { "value": "5", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f020_最大CAL": { "value": "3", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f021_最大REC": { "value": "2", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f022_最重牙位": { "value": "13", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f023_PLI": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f024_GI": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f025_OHIS": { "value": "1.2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f026_BI": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 09:30" },
+      "f027_松动度": { "value": "无松动", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f028_根分叉病变": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f029_根分叉受累牙数": { "value": "0", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f030_咬合创伤": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f031_影像类型": { "value": "全景片(OPG)", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 10:00" },
+      "f032_骨吸收程度": { "value": "无或轻微（<15%）", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f033_骨缺损形态": { "value": "水平吸收", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f034_骨丧失百分比": { "value": "10", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:00" },
+      "f035_余留牙数": { "value": "28", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 10:00" },
+      "f036_牙周诊断类型": { "value": "牙龈退缩", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-20 10:30" },
+      "f037_分期": { "value": "I期（初期）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f038_分级": { "value": "A级（缓慢进展）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f039_诊断依据": { "value": "最大CAL 3mm局限于前牙区，骨丧失<15%，口腔卫生良好，无吸烟/糖尿病等危险因素", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f040_治疗阶段": { "value": "基础治疗(I期)", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f041_基础治疗内容": { "value": "口腔卫生宣教(OHI), 全口洁治", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f042_手术指征": { "value": "无手术指征", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f043_维护间隔": { "value": "6个月", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f044_洁治日期": { "value": "2026-03-20", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 11:00" },
+      "f045_SRP日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f046_SRP象限数": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f047_局部用药": { "value": "未使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f048_手术类型": { "value": "未行手术", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 10:30" },
+      "f049_手术日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f050_手术牙位": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f051_术后用药": { "value": "未使用", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-20 10:30" },
+      "f052_3月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f053_3月PD变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f054_6月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f055_6月CAL变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" },
+      "f056_12月结局": { "value": "未到随访时间", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-20 10:30" }
+    }
+  },
+  {
+    "id": "PERIO-2026-0325",
+    "bed": "牙周-07",
+    "demographics": "60岁 女",
+    "diagnosis": "慢性牙周炎（III期B级）/ 牙周脓肿",
+    "owner": "李医生",
+    "updatedAt": "2026-03-25 14:20",
+    "completion": 65,
+    "statusCounts": {
+      "manual_required": 16,
+      "review_required": 10,
+      "auto_filled": 22,
+      "missing": 8,
+      "source_unclear": 3,
+      "file_review_required": 5
+    },
+    "values": {
+      "f001_年龄": { "value": "60", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 14:20" },
+      "f002_性别": { "value": "女", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 14:20" },
+      "f003_首诊日期": { "value": "2026-03-25", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 14:20" },
+      "f004_牙周主诉": { "value": "牙龈肿胀/溢脓", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-25 14:20" },
+      "f005_刷牙频率": { "value": "1次/天", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f006_牙线使用": { "value": "从不使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f007_漱口水使用": { "value": "不使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f008_最近洁治": { "value": ">3年/从未", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f009_吸烟史": { "value": "已戒烟", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-25 14:20" },
+      "f010_吸烟量": { "value": "10-20支", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f011_糖尿病史": { "value": "2型糖尿病(控制不佳)", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-25 14:20" },
+      "f012_HbA1c": { "value": "9.1", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 14:20" },
+      "f013_家族史": { "value": "不详", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 14:20" },
+      "f014_PD均值": { "value": "5.5", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f015_CAL均值": { "value": "5.2", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f016_BOP阳性率": { "value": "78", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f017_REC均值": { "value": "3.5", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f018_PDge5mm位点数": { "value": "20", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f019_最大PD": { "value": "9", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f020_最大CAL": { "value": "8", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f021_最大REC": { "value": "6", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f022_最重牙位": { "value": "47", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f023_PLI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f024_GI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f025_OHIS": { "value": "4.0", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f026_BI": { "value": "4", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:00" },
+      "f027_松动度": { "value": "II度（水平1-2mm）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f028_根分叉病变": { "value": "II度", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f029_根分叉受累牙数": { "value": "3", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f030_咬合创伤": { "value": "有（继发性）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f031_影像类型": { "value": "CBCT", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 15:30" },
+      "f032_骨吸收程度": { "value": "重度伴垂直骨缺损", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f033_骨缺损形态": { "value": "漏斗形/环形", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f034_骨丧失百分比": { "value": "45", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-03-25 15:30" },
+      "f035_余留牙数": { "value": "22", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 15:30" },
+      "f036_牙周诊断类型": { "value": "牙周脓肿", "status": "review_required", "confirmedBy": "李医生", "updatedAt": "2026-03-25 16:00" },
+      "f037_分期": { "value": "III期（重度伴牙缺失）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f038_分级": { "value": "B级（中速进展）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f039_诊断依据": { "value": "60岁骨丧失45%，47位点急性牙周脓肿，HbA1c 9.1%控制不佳，已因牙周病缺失6颗牙", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f040_治疗阶段": { "value": "基础治疗(I期)", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f041_基础治疗内容": { "value": "口腔卫生宣教(OHI), 龈下刮治+根面平整(SRP), 药物治疗, 拔除无保留价值患牙", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f042_手术指征": { "value": "有（骨缺损需再生）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f043_维护间隔": { "value": "3个月", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f044_洁治日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f045_SRP日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f046_SRP象限数": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f047_局部用药": { "value": "米诺环素凝胶", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f048_手术类型": { "value": "未行手术", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 16:00" },
+      "f049_手术日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f050_手术牙位": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f051_术后用药": { "value": "阿莫西林+甲硝唑", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-03-25 16:30" },
+      "f052_3月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f053_3月PD变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f054_6月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f055_6月CAL变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" },
+      "f056_12月结局": { "value": "未到随访时间", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-03-25 16:00" }
+    }
+  },
+  {
+    "id": "PERIO-2026-0402",
+    "bed": "牙周-02",
+    "demographics": "22岁 女",
+    "diagnosis": "牙龈炎（菌斑性）/ 妊娠期龈炎",
+    "owner": "王医生",
+    "updatedAt": "2026-04-02 13:10",
+    "completion": 94,
+    "statusCounts": {
+      "manual_required": 6,
+      "review_required": 8,
+      "auto_filled": 36,
+      "missing": 2,
+      "source_unclear": 1,
+      "file_review_required": 2
+    },
+    "values": {
+      "f001_年龄": { "value": "22", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 13:10" },
+      "f002_性别": { "value": "女", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 13:10" },
+      "f003_首诊日期": { "value": "2026-04-02", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 13:10" },
+      "f004_牙周主诉": { "value": "牙龈出血", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-04-02 13:10" },
+      "f005_刷牙频率": { "value": "≥2次/天", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 13:10" },
+      "f006_牙线使用": { "value": "从不使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 13:10" },
+      "f007_漱口水使用": { "value": "规律使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 13:10" },
+      "f008_最近洁治": { "value": "<6个月", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-04-02 13:10" },
+      "f009_吸烟史": { "value": "从不吸烟", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-04-02 13:10" },
+      "f010_吸烟量": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 13:10" },
+      "f011_糖尿病史": { "value": "无", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-04-02 13:10" },
+      "f012_HbA1c": { "value": "5.1", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 13:10" },
+      "f013_家族史": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 13:10" },
+      "f014_PD均值": { "value": "2.5", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f015_CAL均值": { "value": "0", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f016_BOP阳性率": { "value": "70", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f017_REC均值": { "value": "0", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f018_PDge5mm位点数": { "value": "0", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f019_最大PD": { "value": "4", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f020_最大CAL": { "value": "0", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f021_最大REC": { "value": "0", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f022_最重牙位": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f023_PLI": { "value": "1", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f024_GI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f025_OHIS": { "value": "1.8", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f026_BI": { "value": "2", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f027_松动度": { "value": "无松动", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f028_根分叉病变": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f029_根分叉受累牙数": { "value": "0", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f030_咬合创伤": { "value": "无", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f031_影像类型": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f032_骨吸收程度": { "value": "无或轻微（<15%）", "status": "review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f033_骨缺损形态": { "value": "水平吸收", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f034_骨丧失百分比": { "value": "5", "status": "file_review_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:00" },
+      "f035_余留牙数": { "value": "28", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 14:00" },
+      "f036_牙周诊断类型": { "value": "牙龈炎", "status": "review_required", "confirmedBy": "王医生", "updatedAt": "2026-04-02 14:30" },
+      "f037_分期": { "value": "不适用（非牙周炎）", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f038_分级": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f039_诊断依据": { "value": "BOP 70%但无附着丧失，妊娠期激素变化加重牙龈炎症反应，CAL=0排除牙周炎", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f040_治疗阶段": { "value": "初诊评估", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f041_基础治疗内容": { "value": "口腔卫生宣教(OHI), 全口洁治", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f042_手术指征": { "value": "无手术指征", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f043_维护间隔": { "value": "6个月", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f044_洁治日期": { "value": "2026-04-02", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 16:00" },
+      "f045_SRP日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f046_SRP象限数": { "value": "不适用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f047_局部用药": { "value": "未使用", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f048_手术类型": { "value": "未行手术", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 14:30" },
+      "f049_手术日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f050_手术牙位": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f051_术后用药": { "value": "未使用", "status": "auto_filled", "confirmedBy": "系统", "updatedAt": "2026-04-02 14:30" },
+      "f052_3月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f053_3月PD变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f054_6月复查日期": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f055_6月CAL变化": { "value": "", "status": "missing", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" },
+      "f056_12月结局": { "value": "未到随访时间", "status": "manual_required", "confirmedBy": "", "updatedAt": "2026-04-02 14:30" }
     }
   }
-] satisfies CaseRecord[];
+];

@@ -8,14 +8,14 @@ export {
   exportJobs,
   patientLifecycles,
   screeningCandidates,
-  tbiBedsideObservations,
-  tbiCaseRecords,
-  tbiCrfTemplate,
-  tbiDeviceMappingFields,
-  tbiDeviceReports,
-  tbiRawTables,
-  tbiSourceEvidence,
-  tbiTrends,
+  perioBedsideObservations,
+  perioCaseRecords,
+  perioCrfTemplate,
+  perioDeviceMappingFields,
+  perioDeviceReports,
+  perioRawTables,
+  perioSourceEvidence,
+  perioTrends,
 } from "./cohort-data";
 export { inputModeLabels, statusLabels } from "./status-labels";
 import { patientProfile } from "./raw/patient-profile";

@@ -7,14 +7,14 @@ import type { ViewName } from "@/types";
 const { cohorts, currentCohort, setView } = useCrfStore();
 
 const flowSteps = [
-  { title: "设备对接", desc: "对接 TCCD/TCD/脑水肿仪/脑电图等离线设备，上传 PDF/XPS/图片等源文件。" },
-  { title: "数据对接", desc: "接入 EMR/HIS/LIS/PACS/护理/评分表/随访等多源异构数据，统一结构化。" },
-  { title: "建队列", desc: "创建专病项目，配置负责人、成员、入排标准和 CRF 模板。" },
-  { title: "筛患者", desc: "通过规则引擎模拟日扫 EMR/HIS/LIS/PACS 与设备数据，生成候选池。" },
+  { title: "设备对接", desc: "对接 Florida电子探针 / CBCT / 口内扫描仪 / 全景X光机等设备，上传 PDF / DICOM / STL 等源文件。" },
+  { title: "数据对接", desc: "接入 EMR / LIS / PACS / 牙周检查表 / 随访等多源异构数据，统一结构化。" },
+  { title: "建队列", desc: "创建牙周专病项目，配置负责人、成员、入排标准和 CRF 模板。" },
+  { title: "筛患者", desc: "通过规则引擎模拟自动扫描门诊病历、LIS 与影像数据，生成候选池。" },
   { title: "确认入组", desc: "研究员查看命中规则和证据，确认入组、排除、暂缓或补资料。" },
   { title: "填 CRF", desc: "按队列模板完成自动带入、人工补录、字段确认和设备文件复核。" },
-  { title: "追溯证据", desc: "在原始资料、设备文件视图、参数趋势和全周期时间轴中核查来源。" },
-  { title: "查询分析", desc: "按临床特征、检验指标、设备参数和结局组合筛选病例。" },
+  { title: "追溯证据", desc: "在原始资料、设备文件视图、探诊趋势和全周期时间轴中核查来源。" },
+  { title: "查询分析", desc: "按临床特征、探诊指标、影像参数和结局组合筛选病例。" },
   { title: "导出数据集", desc: "导出 caseRecord、rawTables、查询结果和多模态源文件包。" },
 ];
 
@@ -34,10 +34,10 @@ const modules: Array<{ title: string; desc: string; view: ViewName; icon: unknow
     <el-card shadow="never" class="home-hero-card">
       <div class="home-hero-content">
         <div>
-          <p class="eyebrow">PICU 多专病科研工作流</p>
-          <h2>从队列定义到数据集导出的专病库原型</h2>
+          <p class="eyebrow">牙周病 专病科研工作流</p>
+          <h2>从队列定义到数据集导出的牙周专病库原型</h2>
           <p>
-            当前原型围绕多专病队列管理、可配置 CRF、来源证据追溯、设备数据融合、查询分析和导出交付展开。
+            当前原型围绕牙周多专病队列管理、可配置 CRF、来源证据追溯、设备数据融合、查询分析和导出交付展开。
           </p>
         </div>
         <div class="home-current-cohort">

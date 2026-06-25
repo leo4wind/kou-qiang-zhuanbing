@@ -16,14 +16,14 @@ import {
   screeningCandidates,
   sourceEvidence,
   statusLabels,
-  tbiBedsideObservations,
-  tbiCaseRecords,
-  tbiCrfTemplate,
-  tbiDeviceMappingFields,
-  tbiDeviceReports,
-  tbiRawTables,
-  tbiSourceEvidence,
-  tbiTrends,
+  perioBedsideObservations,
+  perioCaseRecords,
+  perioCrfTemplate,
+  perioDeviceMappingFields,
+  perioDeviceReports,
+  perioRawTables,
+  perioSourceEvidence,
+  perioTrends,
 } from "@/data";
 import type {
   CandidateStatus,
@@ -62,35 +62,35 @@ interface AppState {
 
 const templates: Record<string, CrfTemplate> = {
   [crfTemplate.id]: crfTemplate,
-  [tbiCrfTemplate.id]: tbiCrfTemplate,
+  [perioCrfTemplate.id]: perioCrfTemplate,
 };
 
-const sepsisCases = structuredClone(caseRecords).map((caseRecord, index) => ({
+const mainCases = structuredClone(caseRecords).map((caseRecord, index) => ({
   ...caseRecord,
-  cohortId: "cohort-sepsis",
+  cohortId: "cohort-perio",
   patientLifecycleId: `life-${caseRecord.id}`,
   enrollmentStatus: "enrolled",
   qualityStatus: index === 2 ? "data_missing" : "pending_review",
 })) satisfies CaseRecord[];
 
-const cases = reactive<CaseRecord[]>([...sepsisCases, ...structuredClone(tbiCaseRecords)]);
+const cases = reactive<CaseRecord[]>([...mainCases, ...structuredClone(perioCaseRecords)]);
 const cohorts = reactive<CohortProject[]>(structuredClone(cohortProjects));
 const candidates = reactive<ScreeningCandidate[]>(structuredClone(screeningCandidates));
 const queryTemplates = reactive(structuredClone(cohortQueryTemplates));
 const exportJobs = reactive(structuredClone(exportJobSeed));
 
-const allDeviceReports = reactive([...structuredClone(deviceReports), ...structuredClone(tbiDeviceReports)]);
-const allBedsideObservations = reactive([...structuredClone(bedsideObservations), ...structuredClone(tbiBedsideObservations)]);
-const allCaseTrends = reactive([...structuredClone(caseTrends), ...structuredClone(tbiTrends)]);
-const allSourceEvidence = reactive([...structuredClone(sourceEvidence), ...structuredClone(tbiSourceEvidence)]);
-const allRawTables = reactive([...structuredClone(rawTables), ...structuredClone(tbiRawTables)]);
+const allDeviceReports = reactive([...structuredClone(deviceReports), ...structuredClone(perioDeviceReports)]);
+const allBedsideObservations = reactive([...structuredClone(bedsideObservations), ...structuredClone(perioBedsideObservations)]);
+const allCaseTrends = reactive([...structuredClone(caseTrends), ...structuredClone(perioTrends)]);
+const allSourceEvidence = reactive([...structuredClone(sourceEvidence), ...structuredClone(perioSourceEvidence)]);
+const allRawTables = reactive([...structuredClone(rawTables), ...structuredClone(perioRawTables)]);
 const allPatientLifecycles = reactive(structuredClone(patientLifecycles));
-const allDeviceMappingFields = reactive([...structuredClone(deviceMappingFields), ...structuredClone(tbiDeviceMappingFields)]);
+const allDeviceMappingFields = reactive([...structuredClone(deviceMappingFields), ...structuredClone(perioDeviceMappingFields)]);
 
 const state = reactive<AppState>({
   view: "home",
-  cohortId: "cohort-sepsis",
-  caseId: sepsisCases[0].id,
+  cohortId: "cohort-perio",
+  caseId: mainCases[0].id,
   moduleId: crfTemplate.modules[0].id,
   fieldId: crfTemplate.modules[0].fields[0].id,
   rawMode: "tables",
@@ -104,7 +104,7 @@ const state = reactive<AppState>({
   deviceFilter: "all",
   deviceKeyword: "",
   candidateFilter: "all",
-  queryTemplateId: "query-sepsis-hypoperfusion",
+  queryTemplateId: "query-perio-bone-loss",
   scanNotice: "",
 });
 
@@ -347,7 +347,7 @@ const currentLifecycle = computed(
 const currentMappingFields = computed(() => [
   ...currentTemplate.value.fields,
   ...allDeviceMappingFields.filter((field) =>
-    field.sourceSystems.some((system) => sourceSystems.value.includes(system)) || state.cohortId === "cohort-tbi",
+    field.sourceSystems.some((system) => sourceSystems.value.includes(system)) || state.cohortId === "cohort-perio-aggressive",
   ),
 ]);
 

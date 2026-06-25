@@ -62,10 +62,10 @@ const filteredCases = computed(() => {
     const reports = deviceReports.filter((report) => report.caseId === caseRecord.id);
     const matchesFilter =
       state.deviceFilter === "all" ||
-      (state.deviceFilter === "missing_brain_edema" &&
-        reports.some((report) => report.deviceName === "脑水肿仪" && report.status === "missing")) ||
-      (state.deviceFilter === "missing_tccd" &&
-        reports.some((report) => report.deviceName === "迈瑞 TCCD" && report.status === "missing")) ||
+      (state.deviceFilter === "missing_probe" &&
+        reports.some((report) => report.deviceName === "Florida 电子探针" && report.status === "missing")) ||
+      (state.deviceFilter === "missing_cbct" &&
+        reports.some((report) => report.deviceName === "CBCT" && report.status === "missing")) ||
       (state.deviceFilter === "review_required" && reports.some((report) => report.status === "review_required"));
     const text = [caseRecord.id, caseRecord.diagnosis, caseRecord.qualityStatus || "", ...reports.map((report) => report.conclusion)]
       .join(" ")
@@ -128,7 +128,7 @@ function deviceCounts(caseRecord: CaseRecord) {
           <div class="card-header">
             <div>
               <p class="eyebrow">核心特征分布</p>
-              <h2>入 PICU 主要病因</h2>
+              <h2>牙周诊断类型分布</h2>
             </div>
           </div>
         </template>
@@ -197,8 +197,8 @@ function deviceCounts(caseRecord: CaseRecord) {
       <div class="filter-bar device-filter-bar">
         <el-select v-model="state.deviceFilter" placeholder="设备筛选" style="width: 210px">
           <el-option label="全部病例" value="all" />
-          <el-option label="缺脑水肿文件" value="missing_brain_edema" />
-          <el-option label="缺 TCCD 文件" value="missing_tccd" />
+          <el-option label="缺探针文件" value="missing_probe" />
+          <el-option label="缺 CBCT 文件" value="missing_cbct" />
           <el-option label="待人工复核" value="review_required" />
         </el-select>
         <el-input v-model="state.deviceKeyword" clearable placeholder="诊断、影像结论、设备结论关键词" />

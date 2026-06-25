@@ -1,3536 +1,1078 @@
 import type { CrfTemplate } from "@/types";
 
 export const crfTemplate = {
-  "id": "picu-sepsis-v1",
-  "name": "省儿童 PICU 脓毒症 CRF",
-  "sourceFile": "业务调研2（2026.）省儿童PICU调研-脓毒症病历.xlsx",
-  "moduleCount": 21,
-  "fieldCount": 74,
+  "id": "perio-v1",
+  "name": "口腔牙周科 牙周病 CRF",
+  "sourceFile": "口腔牙周科专病调研-牙周病CRF设计.xlsx",
+  "moduleCount": 13,
+  "fieldCount": 56,
   "sourceSystemCounts": {
-    "EMR/住院病历": 36,
-    "院外数据": 5,
-    "随访": 2,
-    "来源待确认": 3,
-    "护理/监护": 11,
-    "LIS/检验": 37,
-    "检查/PACS": 3,
-    "评分表": 9
+    "EMR/门诊病历": 22,
+    "牙周检查表": 14,
+    "影像/PACS": 5,
+    "LIS/检验": 5,
+    "牙周电子探针": 4,
+    "口内扫描仪": 2,
+    "随访": 4
   },
   "modules": [
     {
-      "id": "m01_PICU结局",
-      "name": "PICU结局",
-      "fieldCount": 3,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "随访"
-      ],
+      "id": "m01_基本信息",
+      "name": "基本信息",
+      "fieldCount": 4,
+      "sourceSystems": ["EMR/门诊病历", "牙周检查表"],
       "fields": [
         {
-          "id": "f001_PICU结局_今日出院",
-          "moduleId": "m01_PICU结局",
-          "module": "PICU结局",
-          "label": "今日出院",
-          "options": [
-            "存活"
-          ],
-          "dataSource": "出院病历，转归",
-          "rootSource": "",
-          "inputMode": "manual",
-          "rawInputMode": "手动输入",
+          "id": "f001_年龄",
+          "moduleId": "m01_基本信息",
+          "module": "基本信息",
+          "label": "年龄",
+          "options": [],
+          "dataSource": "门诊病历/挂号信息",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
-          "control": "select",
-          "notes": "不确定，存在随访，离开以后回去的情况不确定",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "随访"
-          ]
+          "control": "number",
+          "notes": "自动从挂号系统中提取",
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f002_PICU结局_临床死亡",
-          "moduleId": "m01_PICU结局",
-          "module": "PICU结局",
-          "label": "临床死亡",
-          "options": [
-            "死亡"
-          ],
-          "dataSource": "出院病历：医嘱",
-          "rootSource": "",
-          "inputMode": "manual",
-          "rawInputMode": "手动输入",
+          "id": "f002_性别",
+          "moduleId": "m01_基本信息",
+          "module": "基本信息",
+          "label": "性别",
+          "options": ["男", "女"],
+          "dataSource": "门诊病历/挂号信息",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "不确定",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "自动从挂号系统中提取",
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f003_PICU结局_自动出院_危重放弃治疗_转院",
-          "moduleId": "m01_PICU结局",
-          "module": "PICU结局",
-          "label": "自动出院（危重放弃治疗；转院）",
-          "options": [
-            "放弃治疗后死亡",
-            "放弃治疗后存活"
-          ],
-          "dataSource": "住院病历：医嘱-自动出院\n同时满足门诊病历：诊断/现病史 包含死亡。\n如果回去死的只能随访，在系统上不会体现。；只能随访",
-          "rootSource": "",
-          "inputMode": "manual_unextractable",
-          "rawInputMode": "手动输入；手动输入（无法提取）",
+          "id": "f003_首诊日期",
+          "moduleId": "m01_基本信息",
+          "module": "基本信息",
+          "label": "牙周科首诊日期",
+          "options": [],
+          "dataSource": "门诊挂号记录/就诊日期",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
-          "control": "select",
-          "notes": "不确定",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "随访"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m02_入PICU主要病因",
-      "name": "入PICU主要病因",
-      "fieldCount": 1,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
-      "fields": [
+          "control": "date",
+          "notes": "首次牙周科挂号日期",
+          "sourceSystems": ["EMR/门诊病历"]
+        },
         {
-          "id": "f004_入PICU主要病因_疾病代码",
-          "moduleId": "m02_入PICU主要病因",
-          "module": "入PICU主要病因",
-          "label": "疾病代码",
-          "options": [
-            "呼吸系统疾病",
-            "心血管系统疾病（心衰+休克）",
-            "神经系统疾病",
-            "血液系统疾病",
-            "泌尿系统疾病",
-            "消化系统疾病",
-            "创伤",
-            "术后监护",
-            "各种危象",
-            "严重感染",
-            "代谢紊乱",
-            "皮肤",
-            "其他"
-          ],
-          "dataSource": "住院病历：诊断，入院初步诊断、转院诊断\n其他科转入的病人：转入记录-接科诊断",
-          "rootSource": "诊断里面有疾病代码，不需要手写，是结构化字段",
+          "id": "f004_牙周主诉",
+          "moduleId": "m01_基本信息",
+          "module": "基本信息",
+          "label": "牙周主诉",
+          "options": ["牙龈出血", "牙齿松动", "牙龈退缩", "口腔异味", "咀嚼无力", "牙龈肿胀/溢脓", "其他"],
+          "dataSource": "门诊病历主诉/现病史",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "review",
-          "rawInputMode": "自动提取诊断，然后手动分类；自动提取",
-          "annotationRequired": true,
-          "rawAnnotation": "需要标注",
-          "control": "select",
-          "notes": "诊断编码来源地方有初步入院、出院\n转入病人就是接科诊断\n直接入院的病人：初步诊断（未必明确，不提取）入院诊断和出院诊断。（取前三条）",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "text",
+          "notes": "可从门诊病历中提取，需人工复核确认",
+          "sourceSystems": ["EMR/门诊病历"]
         }
       ]
     },
     {
-      "id": "m03_入PICU已伴有疾病__引发的疾病",
-      "name": "入PICU已伴有疾病 （引发的疾病）",
-      "fieldCount": 1,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
+      "id": "m02_口腔卫生习惯",
+      "name": "口腔卫生习惯",
+      "fieldCount": 4,
+      "sourceSystems": ["牙周检查表"],
       "fields": [
         {
-          "id": "f005_入PICU已伴有疾病__引发的疾病_疾病代码",
-          "moduleId": "m03_入PICU已伴有疾病__引发的疾病",
-          "module": "入PICU已伴有疾病 （引发的疾病）",
-          "label": "疾病代码",
-          "options": [
-            "呼吸系统疾病",
-            "心血管系统疾病",
-            "神经系统疾病",
-            "血液系统疾病",
-            "泌尿系统疾病",
-            "消化系统疾病",
-            "免疫系统疾病",
-            "肿瘤",
-            "代谢性疾病",
-            "遗传性疾病",
-            "器官移植或干细胞移植",
-            "营养性疾病",
-            "其他",
-            "无"
-          ],
-          "dataSource": "既往史：门诊病历、住院病历；诊断：病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f005_刷牙频率",
+          "moduleId": "m02_口腔卫生习惯",
+          "module": "口腔卫生习惯",
+          "label": "每日刷牙频率",
+          "options": ["≥2次/天", "1次/天", "偶尔/不规律", "不刷牙"],
+          "dataSource": "牙周检查表-口腔卫生问诊",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "有疾病还没好",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "患者自述，需在检查时手动记录",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f006_牙线使用",
+          "moduleId": "m02_口腔卫生习惯",
+          "module": "口腔卫生习惯",
+          "label": "牙线/牙缝刷使用",
+          "options": ["每日使用", "偶尔使用", "从不使用"],
+          "dataSource": "牙周检查表-口腔卫生问诊",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "评估邻面清洁习惯",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f007_漱口水使用",
+          "moduleId": "m02_口腔卫生习惯",
+          "module": "口腔卫生习惯",
+          "label": "漱口水使用",
+          "options": ["规律使用", "偶尔使用", "不使用"],
+          "dataSource": "牙周检查表-口腔卫生问诊",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f008_最近洁治",
+          "moduleId": "m02_口腔卫生习惯",
+          "module": "口腔卫生习惯",
+          "label": "最近一次洁治时间",
+          "options": ["<6个月", "6-12个月", "1-3年", ">3年/从未"],
+          "dataSource": "牙周检查表-口腔卫生问诊 / EMR治疗记录",
+          "rootSource": "牙周检查表",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "可从EMR治疗记录中提取，无记录时手动问询",
+          "sourceSystems": ["牙周检查表", "EMR/门诊病历"]
         }
       ]
     },
     {
-      "id": "m04_基础疾病__本来就存在的疾病",
-      "name": "基础疾病 （本来就存在的疾病）",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "来源待确认"
-      ],
+      "id": "m03_危险因素",
+      "name": "危险因素与全身背景",
+      "fieldCount": 5,
+      "sourceSystems": ["EMR/门诊病历", "LIS/检验", "牙周检查表"],
       "fields": [
         {
-          "id": "f006_基础疾病__本来就存在的疾病_无",
-          "moduleId": "m04_基础疾病__本来就存在的疾病",
-          "module": "基础疾病 （本来就存在的疾病）",
-          "label": "无",
+          "id": "f009_吸烟史",
+          "moduleId": "m03_危险因素",
+          "module": "危险因素与全身背景",
+          "label": "吸烟史",
+          "options": ["从不吸烟", "已戒烟", "当前吸烟"],
+          "dataSource": "门诊病历-个人史 / 牙周检查表",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "可从门诊病史提取，无记录时手动补录",
+          "sourceSystems": ["EMR/门诊病历", "牙周检查表"]
+        },
+        {
+          "id": "f010_吸烟量",
+          "moduleId": "m03_危险因素",
+          "module": "危险因素与全身背景",
+          "label": "每日吸烟量（支/天）",
+          "options": ["不适用", "<10支", "10-20支", ">20支"],
+          "dataSource": "牙周检查表-吸烟量问诊",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "仅当前吸烟或已戒烟者填写",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f011_糖尿病史",
+          "moduleId": "m03_危险因素",
+          "module": "危险因素与全身背景",
+          "label": "糖尿病史",
+          "options": ["无", "糖尿病前期", "2型糖尿病(控制良好)", "2型糖尿病(控制不佳)", "1型糖尿病"],
+          "dataSource": "门诊病历-既往史 / LIS/检验",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "结合既往史和检验结果综合判断",
+          "sourceSystems": ["EMR/门诊病历", "LIS/检验"]
+        },
+        {
+          "id": "f012_HbA1c",
+          "moduleId": "m03_危险因素",
+          "module": "危险因素与全身背景",
+          "label": "糖化血红蛋白 HbA1c（%）",
           "options": [],
-          "dataSource": "",
+          "dataSource": "LIS/检验-糖化血红蛋白",
+          "rootSource": "LIS/检验",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "自动从LIS提取最近一次结果",
+          "sourceSystems": ["LIS/检验"]
+        },
+        {
+          "id": "f013_家族史",
+          "moduleId": "m03_危险因素",
+          "module": "危险因素与全身背景",
+          "label": "牙周病家族史",
+          "options": ["无", "父母有牙周病史", "兄弟姐妹有牙周病史", "不详"],
+          "dataSource": "牙周检查表-家族史问诊",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "需手动询问记录",
+          "sourceSystems": ["牙周检查表"]
+        }
+      ]
+    },
+    {
+      "id": "m04_牙周探诊_全口均值",
+      "name": "牙周探诊（全口均值）",
+      "fieldCount": 5,
+      "sourceSystems": ["牙周电子探针", "牙周检查表"],
+      "fields": [
+        {
+          "id": "f014_PD均值",
+          "moduleId": "m04_牙周探诊_全口均值",
+          "module": "牙周探诊（全口均值）",
+          "label": "探诊深度均值 PD（mm）",
+          "options": [],
+          "dataSource": "牙周电子探针/牙周检查表-全口探诊",
+          "rootSource": "牙周电子探针",
+          "inputMode": "file_review",
+          "rawInputMode": "设备文件复核",
+          "annotationRequired": true,
+          "rawAnnotation": "需保留电子探针原始报告并人工复核",
+          "control": "number",
+          "notes": "由电子探针自动计算，需复核异常值",
+          "sourceSystems": ["牙周电子探针", "牙周检查表"]
+        },
+        {
+          "id": "f015_CAL均值",
+          "moduleId": "m04_牙周探诊_全口均值",
+          "module": "牙周探诊（全口均值）",
+          "label": "临床附着丧失均值 CAL（mm）",
+          "options": [],
+          "dataSource": "牙周电子探针/牙周检查表-全口探诊",
+          "rootSource": "牙周电子探针",
+          "inputMode": "file_review",
+          "rawInputMode": "设备文件复核",
+          "annotationRequired": true,
+          "rawAnnotation": "需保留电子探针原始报告并人工复核",
+          "control": "number",
+          "notes": "由电子探针自动计算，需复核异常值",
+          "sourceSystems": ["牙周电子探针", "牙周检查表"]
+        },
+        {
+          "id": "f016_BOP阳性率",
+          "moduleId": "m04_牙周探诊_全口均值",
+          "module": "牙周探诊（全口均值）",
+          "label": "探诊出血阳性率 BOP（%）",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊出血",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "BOP阳性位点数÷检查位点总数×100%",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f017_REC均值",
+          "moduleId": "m04_牙周探诊_全口均值",
+          "module": "牙周探诊（全口均值）",
+          "label": "牙龈退缩均值 REC（mm）",
+          "options": [],
+          "dataSource": "牙周电子探针/牙周检查表",
+          "rootSource": "牙周电子探针",
+          "inputMode": "file_review",
+          "rawInputMode": "设备文件复核",
+          "annotationRequired": true,
+          "rawAnnotation": "需保留电子探针原始报告并人工复核",
+          "control": "number",
+          "notes": "",
+          "sourceSystems": ["牙周电子探针", "牙周检查表"]
+        },
+        {
+          "id": "f018_PDge5mm位点数",
+          "moduleId": "m04_牙周探诊_全口均值",
+          "module": "牙周探诊（全口均值）",
+          "label": "PD≥5mm 位点数",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊统计",
+          "rootSource": "牙周检查表",
+          "inputMode": "review",
+          "rawInputMode": "自动统计+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "用于分期判定，需人工确认",
+          "sourceSystems": ["牙周检查表"]
+        }
+      ]
+    },
+    {
+      "id": "m05_牙周探诊_最重位点",
+      "name": "牙周探诊（最重位点）",
+      "fieldCount": 4,
+      "sourceSystems": ["牙周检查表", "牙周电子探针"],
+      "fields": [
+        {
+          "id": "f019_最大PD",
+          "moduleId": "m05_牙周探诊_最重位点",
+          "module": "牙周探诊（最重位点）",
+          "label": "最大探诊深度（mm）",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊最重值",
+          "rootSource": "牙周检查表",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "",
+          "sourceSystems": ["牙周检查表", "牙周电子探针"]
+        },
+        {
+          "id": "f020_最大CAL",
+          "moduleId": "m05_牙周探诊_最重位点",
+          "module": "牙周探诊（最重位点）",
+          "label": "最大临床附着丧失（mm）",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊最重值",
+          "rootSource": "牙周检查表",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "",
+          "sourceSystems": ["牙周检查表", "牙周电子探针"]
+        },
+        {
+          "id": "f021_最大REC",
+          "moduleId": "m05_牙周探诊_最重位点",
+          "module": "牙周探诊（最重位点）",
+          "label": "最大牙龈退缩（mm）",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊最重值",
+          "rootSource": "牙周检查表",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "",
+          "sourceSystems": ["牙周检查表", "牙周电子探针"]
+        },
+        {
+          "id": "f022_最重牙位",
+          "moduleId": "m05_牙周探诊_最重位点",
+          "module": "牙周探诊（最重位点）",
+          "label": "牙周破坏最重牙位",
+          "options": [],
+          "dataSource": "牙周检查表-全口探诊最重值",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "text",
+          "notes": "FDI牙位标记法，如46/36",
+          "sourceSystems": ["牙周检查表"]
+        }
+      ]
+    },
+    {
+      "id": "m06_菌斑炎症指数",
+      "name": "菌斑与炎症指数",
+      "fieldCount": 4,
+      "sourceSystems": ["牙周检查表"],
+      "fields": [
+        {
+          "id": "f023_PLI",
+          "moduleId": "m06_菌斑炎症指数",
+          "module": "菌斑与炎症指数",
+          "label": "菌斑指数 PLI",
+          "options": ["0", "1", "2", "3"],
+          "dataSource": "牙周检查表-菌斑指数评估",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "Silness & Löe 菌斑指数: 0=无菌斑,1=探针可刮出,2=肉眼可见,3=大量软垢",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f024_GI",
+          "moduleId": "m06_菌斑炎症指数",
+          "module": "菌斑与炎症指数",
+          "label": "牙龈指数 GI",
+          "options": ["0", "1", "2", "3"],
+          "dataSource": "牙周检查表-牙龈指数评估",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "Löe & Silness 牙龈指数: 0=正常,1=轻度炎症,2=中度炎症,3=重度炎症",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f025_OHIS",
+          "moduleId": "m06_菌斑炎症指数",
+          "module": "菌斑与炎症指数",
+          "label": "简化口腔卫生指数 OHI-S",
+          "options": [],
+          "dataSource": "牙周检查表-简化口腔卫生指数",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "DI-S + CI-S，范围0~6，分数越高卫生越差",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f026_BI",
+          "moduleId": "m06_菌斑炎症指数",
+          "module": "菌斑与炎症指数",
+          "label": "出血指数 BI",
+          "options": ["0", "1", "2", "3", "4", "5"],
+          "dataSource": "牙周检查表-出血指数",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "Mazza出血指数: 0=健康,5=自发出血",
+          "sourceSystems": ["牙周检查表"]
+        }
+      ]
+    },
+    {
+      "id": "m07_松动度与根分叉",
+      "name": "牙松动度与根分叉病变",
+      "fieldCount": 4,
+      "sourceSystems": ["牙周检查表", "影像/PACS"],
+      "fields": [
+        {
+          "id": "f027_松动度",
+          "moduleId": "m07_松动度与根分叉",
+          "module": "牙松动度与根分叉病变",
+          "label": "最重牙松动度",
+          "options": ["无松动", "I度（水平<1mm）", "II度（水平1-2mm）", "III度（水平>2mm+垂直）"],
+          "dataSource": "牙周检查表-松动度检查",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f028_根分叉病变",
+          "moduleId": "m07_松动度与根分叉",
+          "module": "牙松动度与根分叉病变",
+          "label": "最重根分叉病变 FI",
+          "options": ["无", "I度", "II度", "III度", "IV度"],
+          "dataSource": "牙周检查表-根分叉检查 / CBCT",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "Hamp分度: I=水平丧失≤3mm, II=>3mm未通, III=贯通, IV=贯通且牙龈退缩",
+          "sourceSystems": ["牙周检查表", "影像/PACS"]
+        },
+        {
+          "id": "f029_根分叉受累牙数",
+          "moduleId": "m07_松动度与根分叉",
+          "module": "牙松动度与根分叉病变",
+          "label": "根分叉受累牙数",
+          "options": [],
+          "dataSource": "牙周检查表-根分叉统计",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "FI≥II度牙位计数",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f030_咬合创伤",
+          "moduleId": "m07_松动度与根分叉",
+          "module": "牙松动度与根分叉病变",
+          "label": "咬合创伤",
+          "options": ["无", "有（原发性）", "有（继发性）"],
+          "dataSource": "牙周检查表-咬合检查",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "结合松动度、X线及咬合检查综合判断",
+          "sourceSystems": ["牙周检查表", "影像/PACS"]
+        }
+      ]
+    },
+    {
+      "id": "m08_影像学",
+      "name": "影像学检查",
+      "fieldCount": 5,
+      "sourceSystems": ["影像/PACS", "口内扫描仪"],
+      "fields": [
+        {
+          "id": "f031_影像类型",
+          "moduleId": "m08_影像学",
+          "module": "影像学检查",
+          "label": "影像检查类型",
+          "options": ["全景片(OPG)", "CBCT", "根尖片", "咬翼片"],
+          "dataSource": "检查/PACS",
+          "rootSource": "影像/PACS",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "自动从PACS影像类型提取",
+          "sourceSystems": ["影像/PACS"]
+        },
+        {
+          "id": "f032_骨吸收程度",
+          "moduleId": "m08_影像学",
+          "module": "影像学检查",
+          "label": "牙槽骨吸收程度",
+          "options": ["无或轻微（<15%）", "轻中度（15%-33%）", "中重度（>33%）", "重度伴垂直骨缺损"],
+          "dataSource": "影像/PACS 放射报告 / CBCT分析",
+          "rootSource": "影像/PACS",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "参考放射科报告，牙周科医生复核确认",
+          "sourceSystems": ["影像/PACS"]
+        },
+        {
+          "id": "f033_骨缺损形态",
+          "moduleId": "m08_影像学",
+          "module": "影像学检查",
+          "label": "骨缺损形态",
+          "options": ["水平吸收", "垂直吸收", "混合型", "漏斗形/环形"],
+          "dataSource": "影像/PACS 放射报告 / CBCT分析",
+          "rootSource": "影像/PACS",
+          "inputMode": "file_review",
+          "rawInputMode": "设备文件复核",
+          "annotationRequired": true,
+          "rawAnnotation": "需保留CBCT/全景片源文件并人工读片确认",
+          "control": "select",
+          "notes": "",
+          "sourceSystems": ["影像/PACS"]
+        },
+        {
+          "id": "f034_骨丧失百分比",
+          "moduleId": "m08_影像学",
+          "module": "影像学检查",
+          "label": "牙槽骨丧失百分比（最重位点）",
+          "options": [],
+          "dataSource": "CBCT分析/ 全景片测量",
+          "rootSource": "影像/PACS",
+          "inputMode": "file_review",
+          "rawInputMode": "设备文件复核",
+          "annotationRequired": true,
+          "rawAnnotation": "需在PACS/CBCT软件中测量并截图留证",
+          "control": "number",
+          "notes": "用于分期: I期<15%, II期15-33%, III-IV期>33%根长",
+          "sourceSystems": ["影像/PACS"]
+        },
+        {
+          "id": "f035_余留牙数",
+          "moduleId": "m08_影像学",
+          "module": "影像学检查",
+          "label": "余留牙数",
+          "options": [],
+          "dataSource": "口内扫描仪/影像/PACS",
+          "rootSource": "口内扫描仪",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "number",
+          "notes": "不含第三磨牙，自动统计",
+          "sourceSystems": ["口内扫描仪", "影像/PACS"]
+        }
+      ]
+    },
+    {
+      "id": "m09_牙周诊断",
+      "name": "牙周诊断与分型分期",
+      "fieldCount": 4,
+      "sourceSystems": ["EMR/门诊病历", "牙周检查表", "影像/PACS"],
+      "fields": [
+        {
+          "id": "f036_牙周诊断类型",
+          "moduleId": "m09_牙周诊断",
+          "module": "牙周诊断与分型分期",
+          "label": "牙周诊断类型",
+          "options": ["牙龈炎", "慢性牙周炎", "侵袭性牙周炎", "牙周-牙髓联合病变", "坏死性牙周病", "牙周脓肿", "牙龈退缩"],
+          "dataSource": "门诊病历-诊断 / 牙周检查表",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "ICD编码可从诊断记录提取",
+          "sourceSystems": ["EMR/门诊病历", "牙周检查表"]
+        },
+        {
+          "id": "f037_分期",
+          "moduleId": "m09_牙周诊断",
+          "module": "牙周诊断与分型分期",
+          "label": "牙周炎分期（2018 AAP）",
+          "options": ["不适用（非牙周炎）", "I期（初期）", "II期（中度）", "III期（重度伴牙缺失）", "IV期（晚期伴咀嚼功能丧失）"],
+          "dataSource": "牙周检查表-分期综合评估",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "基于最大CAL、骨丧失、牙缺失数综合判定",
+          "sourceSystems": ["牙周检查表", "影像/PACS"]
+        },
+        {
+          "id": "f038_分级",
+          "moduleId": "m09_牙周诊断",
+          "module": "牙周诊断与分型分期",
+          "label": "牙周炎分级（2018 AAP）",
+          "options": ["不适用", "A级（缓慢进展）", "B级（中速进展）", "C级（快速进展）"],
+          "dataSource": "牙周检查表-分级综合评估",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "基于骨丧失/年龄比值、病例表型、危险因素综合判定",
+          "sourceSystems": ["牙周检查表", "LIS/检验"]
+        },
+        {
+          "id": "f039_诊断依据",
+          "moduleId": "m09_牙周诊断",
+          "module": "牙周诊断与分型分期",
+          "label": "关键诊断依据",
+          "options": [],
+          "dataSource": "综合评估",
           "rootSource": "",
           "inputMode": "manual",
           "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "text",
-          "notes": "有疾病已经好了",
-          "sourceSystems": [
-            "来源待确认"
-          ]
-        },
-        {
-          "id": "f007_基础疾病__本来就存在的疾病_有",
-          "moduleId": "m04_基础疾病__本来就存在的疾病",
-          "module": "基础疾病 （本来就存在的疾病）",
-          "label": "有",
-          "options": [
-            "呼吸系统疾病",
-            "心血管系统疾病",
-            "神经系统疾病",
-            "血液系统疾病",
-            "泌尿系统疾病",
-            "消化系统疾病",
-            "免疫系统疾病",
-            "肿瘤",
-            "代谢性疾病",
-            "遗传性疾病",
-            "营养性疾病",
-            "其他"
-          ],
-          "dataSource": "既往史-健康状况：门诊病历、住院病历；诊断",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "会有明确写出疾病的名称",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "自由文本，简述分期分级的核心依据",
+          "sourceSystems": ["牙周检查表", "影像/PACS", "LIS/检验"]
         }
       ]
     },
     {
-      "id": "m05_免疫抑制",
-      "name": "免疫抑制",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
+      "id": "m10_治疗计划",
+      "name": "治疗计划",
+      "fieldCount": 4,
+      "sourceSystems": ["EMR/门诊病历", "牙周检查表"],
       "fields": [
         {
-          "id": "f008_免疫抑制_无",
-          "moduleId": "m05_免疫抑制",
-          "module": "免疫抑制",
-          "label": "无",
-          "options": [],
-          "dataSource": "既往史：门诊病历、住院病历；诊断：本次病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        },
-        {
-          "id": "f009_免疫抑制_有",
-          "moduleId": "m05_免疫抑制",
-          "module": "免疫抑制",
-          "label": "有",
-          "options": [
-            "血液/实体肿瘤/化疗/骨髓移植/Car-T（同一类，血液病）",
-            "实体器官移植",
-            "原发性免疫缺陷",
-            "结缔组织病/风湿免疫",
-            "HIV",
-            "结核感染活动",
-            "其他"
-          ],
-          "dataSource": "既往史：门诊病历、住院病历；诊断：本次病历",
-          "rootSource": "提取困难，病历里面没有免疫抑制的字眼；要看病史",
+          "id": "f040_治疗阶段",
+          "moduleId": "m10_治疗计划",
+          "module": "治疗计划",
+          "label": "当前治疗阶段",
+          "options": ["初诊评估", "基础治疗(I期)", "再评估", "牙周手术(II期)", "修复/正畸(III期)", "维护期(IV期)"],
+          "dataSource": "门诊病历-治疗计划",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "manual",
           "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "具体的确认方法",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m06_家族史",
-      "name": "家族史",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
-      "fields": [
+          "notes": "",
+          "sourceSystems": ["EMR/门诊病历"]
+        },
         {
-          "id": "f010_家族史_无",
-          "moduleId": "m06_家族史",
-          "module": "家族史",
-          "label": "无",
-          "options": [],
-          "dataSource": "家族史：住院病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f041_基础治疗内容",
+          "moduleId": "m10_治疗计划",
+          "module": "治疗计划",
+          "label": "基础治疗计划内容",
+          "options": ["口腔卫生宣教(OHI)", "全口洁治", "龈下刮治+根面平整(SRP)", "拔除无保留价值患牙", "龋病/牙体治疗", "药物治疗"],
+          "dataSource": "门诊病历-治疗计划",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "可多选，自由文本记录",
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f011_家族史_有",
-          "moduleId": "m06_家族史",
-          "module": "家族史",
-          "label": "有",
-          "options": [
-            "习惯性流产史",
-            "先心病病史",
-            "肾病病史",
-            "高血压病病史",
-            "糖尿病病史",
-            "肿瘤病史",
-            "冠心病病史",
-            "耳聋家族史",
-            "癫痫病史",
-            "精神病史",
-            "其他"
-          ],
-          "dataSource": "家族史：住院病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f042_手术指征",
+          "moduleId": "m10_治疗计划",
+          "module": "治疗计划",
+          "label": "牙周手术指征",
+          "options": ["无手术指征", "有（PD≥5mm持续）", "有（根分叉II度以上）", "有（骨缺损需再生）", "有（牙冠延长/美学）"],
+          "dataSource": "牙周检查表-治疗决策",
+          "rootSource": "牙周检查表",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "control": "select",
+          "notes": "基础治疗后再评估后判定",
+          "sourceSystems": ["牙周检查表"]
+        },
+        {
+          "id": "f043_维护间隔",
+          "moduleId": "m10_治疗计划",
+          "module": "治疗计划",
+          "label": "建议维护期间隔",
+          "options": ["1个月", "3个月", "6个月", "12个月", "暂不确定"],
+          "dataSource": "门诊病历-医嘱",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "select",
+          "notes": "基于风险评估: 低风险=12月, 中风险=6月, 高风险=3月",
+          "sourceSystems": ["EMR/门诊病历"]
         }
       ]
     },
     {
-      "id": "m07_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分",
-      "name": "脓毒症（纳入标准：感染+SIRS，脓毒症诊断标准：感染＋PSS评分）",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
-      "fields": [
-        {
-          "id": "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无",
-          "moduleId": "m07_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分",
-          "module": "脓毒症（纳入标准：感染+SIRS，脓毒症诊断标准：感染＋PSS评分）",
-          "label": "无",
-          "options": [],
-          "dataSource": "有无诊断",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        },
-        {
-          "id": "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有",
-          "moduleId": "m07_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分",
-          "module": "脓毒症（纳入标准：感染+SIRS，脓毒症诊断标准：感染＋PSS评分）",
-          "label": "有",
-          "options": [
-            "纳入日期",
-            "出院时是否诊断",
-            "诊断日期"
-          ],
-          "dataSource": "诊断对应病历的日期；出院诊断有无包含脓毒症，这次住院是否有包含脓毒症；不确定",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "date",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m08_SIRS_炎症反应",
-      "name": "SIRS（炎症反应）",
+      "id": "m11_基础治疗",
+      "name": "基础治疗记录",
       "fieldCount": 4,
-      "sourceSystems": [
-        "LIS/检验",
-        "护理/监护"
-      ],
+      "sourceSystems": ["EMR/门诊病历"],
       "fields": [
         {
-          "id": "f014_SIRS_炎症反应_体温",
-          "moduleId": "m08_SIRS_炎症反应",
-          "module": "SIRS（炎症反应）",
-          "label": "体温",
-          "options": [
-            "正常",
-            "发热（≥38.5℃）或低体温（≤36℃）"
-          ],
-          "dataSource": "有符合脓毒症的护理记录单上",
-          "rootSource": "",
+          "id": "f044_洁治日期",
+          "moduleId": "m11_基础治疗",
+          "module": "基础治疗记录",
+          "label": "全口洁治完成日期",
+          "options": [],
+          "dataSource": "门诊病历-治疗记录 / 收费记录",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "auto",
-          "rawInputMode": "",
+          "rawInputMode": "自动提取",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "date",
+          "notes": "自动从治疗记录/收费系统中提取",
+          "sourceSystems": ["EMR/门诊病历"]
+        },
+        {
+          "id": "f045_SRP日期",
+          "moduleId": "m11_基础治疗",
+          "module": "基础治疗记录",
+          "label": "龈下刮治+根面平整(SRP)完成日期",
+          "options": [],
+          "dataSource": "门诊病历-治疗记录",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "auto",
+          "rawInputMode": "自动提取",
+          "annotationRequired": false,
+          "rawAnnotation": "",
+          "control": "date",
+          "notes": "自动提取最后一次SRP治疗日期",
+          "sourceSystems": ["EMR/门诊病历"]
+        },
+        {
+          "id": "f046_SRP象限数",
+          "moduleId": "m11_基础治疗",
+          "module": "基础治疗记录",
+          "label": "SRP 治疗象限数",
+          "options": ["1", "2", "3", "4（全口）", "不适用"],
+          "dataSource": "门诊病历-治疗记录",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "review",
+          "rawInputMode": "自动提取+人工确认",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "监护仪",
-          "sourceSystems": [
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f015_SIRS_炎症反应_心动过速",
-          "moduleId": "m08_SIRS_炎症反应",
-          "module": "SIRS（炎症反应）",
-          "label": "心动过速",
-          "options": [
-            "无，不超过120",
-            "有"
-          ],
-          "dataSource": "心率：护理单",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "boolean",
-          "notes": "监护仪",
-          "sourceSystems": [
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f016_SIRS_炎症反应_呼吸增加",
-          "moduleId": "m08_SIRS_炎症反应",
-          "module": "SIRS（炎症反应）",
-          "label": "呼吸增加",
-          "options": [
-            "无",
-            "有"
-          ],
-          "dataSource": "每分钟呼吸次数：护理单",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "boolean",
-          "notes": "监护仪",
-          "sourceSystems": [
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f017_SIRS_炎症反应_白细胞",
-          "moduleId": "m08_SIRS_炎症反应",
-          "module": "SIRS（炎症反应）",
-          "label": "白细胞",
-          "options": [
-            "正常：数值",
-            "白细胞增多（>12×109/L）",
-            "白细胞减少（<4×109/L）"
-          ],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "血常规",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m09_感染指标",
-      "name": "感染指标",
-      "fieldCount": 11,
-      "sourceSystems": [
-        "LIS/检验",
-        "检查/PACS"
-      ],
-      "fields": [
-        {
-          "id": "f018_感染指标_CRP",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "CRP",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
           "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f019_感染指标_PCT",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "PCT",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验",
-            "检查/PACS"
-          ]
-        },
-        {
-          "id": "f020_感染指标_IL_1",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "IL-1",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f021_感染指标_IL_2",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "IL-2",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f022_感染指标_IL_6",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "IL-6",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f023_感染指标_IL_8",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "IL-8",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f024_感染指标_IL_10",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "IL-10",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f025_感染指标_TNF_α",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "TNF-α",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f026_感染指标_INF_γ",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "INF-γ",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f027_感染指标_1_3_β_D葡聚糖",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "（1,3）-β-D葡聚糖",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f028_感染指标_GM",
-          "moduleId": "m09_感染指标",
-          "module": "感染指标",
-          "label": "GM",
-          "options": [],
-          "dataSource": "血常规检验单，lis检验检查结果",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m10_PSS评分",
-      "name": "PSS评分",
-      "fieldCount": 7,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "护理/监护",
-        "评分表"
-      ],
-      "fields": [
-        {
-          "id": "f029_PSS评分_呼吸",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "呼吸",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "监护仪",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f030_PSS评分_血管活性药物",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "血管活性药物",
-          "options": [
-            "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺"
-          ],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f047_局部用药",
+          "moduleId": "m11_基础治疗",
+          "module": "基础治疗记录",
+          "label": "牙周局部用药",
+          "options": ["未使用", "米诺环素凝胶", "多西环素凝胶", "氯己定冲洗", "其他抗生素"],
+          "dataSource": "门诊病历-治疗记录",
+          "rootSource": "EMR/门诊病历",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "病程中有没有提及",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f031_PSS评分_平均动脉压",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "平均动脉压",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "监护仪",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f032_PSS评分_乳酸",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "乳酸",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "血气分析-LAC；床边血气仪器（数据自动上传）",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f033_PSS评分_循环",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "循环",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "不确定",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f034_PSS评分_凝血",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "凝血",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "凝血检验LIS-EMR",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验",
-            "评分表"
-          ]
-        },
-        {
-          "id": "f035_PSS评分_神经",
-          "moduleId": "m10_PSS评分",
-          "module": "PSS评分",
-          "label": "神经",
-          "options": [],
-          "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "昏迷评分表，只能人为",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "评分表"
-          ]
+          "notes": "",
+          "sourceSystems": ["EMR/门诊病历"]
         }
       ]
     },
     {
-      "id": "m11_呼吸功能障碍",
-      "name": "呼吸功能障碍",
+      "id": "m12_牙周手术",
+      "name": "牙周手术记录",
       "fieldCount": 4,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ],
+      "sourceSystems": ["EMR/门诊病历"],
       "fields": [
         {
-          "id": "f036_呼吸功能障碍_低氧血症",
-          "moduleId": "m11_呼吸功能障碍",
-          "module": "呼吸功能障碍",
-          "label": "低氧血症",
-          "options": [
-            "吸氧时：P/F(Pa02／Fi02 ) =     mmHg;"
-          ],
-          "dataSource": "血气检验单",
-          "rootSource": "",
+          "id": "f048_手术类型",
+          "moduleId": "m12_牙周手术",
+          "module": "牙周手术记录",
+          "label": "牙周手术类型",
+          "options": ["未行手术", "翻瓣清创(OFD)", "牙周再生术(GTR)", "牙冠延长术", "牙龈移植/根面覆盖", "牙周成形术"],
+          "dataSource": "门诊病历-手术记录",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "auto",
-          "rawInputMode": "",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
-          "control": "number",
-          "notes": "吸氧时候测量",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
+          "control": "select",
+          "notes": "自动从手术记录中提取",
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f037_呼吸功能障碍_机械通气",
-          "moduleId": "m11_呼吸功能障碍",
-          "module": "呼吸功能障碍",
-          "label": "机械通气",
-          "options": [
-            "无创机械通气：P/F =   mmHg",
-            "无创机械通气：S/F比 =",
-            "有创机械通气：OI指数="
-          ],
-          "dataSource": "血气检验单",
-          "rootSource": "",
+          "id": "f049_手术日期",
+          "moduleId": "m12_牙周手术",
+          "module": "牙周手术记录",
+          "label": "手术日期",
+          "options": [],
+          "dataSource": "门诊病历-手术记录 / 收费记录",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f038_呼吸功能障碍_有创机械通气_OIS指数",
-          "moduleId": "m11_呼吸功能障碍",
-          "module": "呼吸功能障碍",
-          "label": "有创机械通气：OIS指数=",
-          "options": [
-            "有创机械通气：OIS指数="
-          ],
-          "dataSource": "血气检验单",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f039_呼吸功能障碍_ARDS",
-          "moduleId": "m11_呼吸功能障碍",
-          "module": "呼吸功能障碍",
-          "label": "ARDS",
-          "options": [
-            "无",
-            "PaO2   mmHg, FiO2   %，PaO2/FiO2   mmHg,",
-            "PaCO2     mmHg，SpO2      %，Paw",
-            "无创通气：P/F比      ，S/F比（P/F无法获取时填写）",
-            "有创机械通气：氧指数（OI）     ， 氧饱和度指数（OSI）（OI无法获取时填写）      ；"
-          ],
-          "dataSource": "血气检验单",
-          "rootSource": "手动选择",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "1.做成范围值\n2.如果是转入病人（病程记录有转入日期），6-7小时以内的血气单时间",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m12_心血管功能障碍",
-      "name": "心血管功能障碍",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "护理/监护"
-      ],
-      "fields": [
-        {
-          "id": "f040_心血管功能障碍_低血压_护理单上血压最低时候",
-          "moduleId": "m12_心血管功能障碍",
-          "module": "心血管功能障碍",
-          "label": "低血压（护理单上血压最低时候）",
-          "options": [
-            "无",
-            "有血管活性药：肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-            "高乳酸血症：数值",
-            "毛细血管再充盈时间或CRT延长（≥2s）",
-            "皮肤花斑/花纹"
-          ],
-          "dataSource": "住院病历：住院医嘱中的临时医嘱，来源医嘱系统；血气经验单；病程里面；病历体格检查、病程",
-          "rootSource": "对应血压低的时候；血压最低时候的乳酸，血压来源监护仪；血压最低时候，6小时内对应的值",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": true,
-          "rawAnnotation": "要",
-          "control": "date",
-          "notes": "血压最低（重症护理记录单，监护仪数据实时导入），往后12小时之内的乳酸值，如果多次取最高的；CRT常规在大病历中才有；血压低的时候要求大家在病程中把这些内容写出来",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验",
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显",
-          "moduleId": "m12_心血管功能障碍",
-          "module": "心血管功能障碍",
-          "label": "低灌注（低血压的时候是否有低灌注表显）",
-          "options": [
-            "心率、脉搏变化：外周动脉搏动细弱，心率、脉搏增快；",
-            "皮肤改变：面色苍白或苍灰，湿冷，大理石样花纹。如暖休克可表现为四肢温暖、皮肤干燥。",
-            "毛细血管再充盈时间（CRT）延长（>2s）（需除外环境温度影响）",
-            "意识改变：早期烦躁不安或萎靡，表情淡漠。晚期意识模糊，甚至昏迷、惊厥。",
-            "液体复苏后尿量<0.5 ml／(kg·h)，持续至少2h"
-          ],
-          "dataSource": "重症护理单（血压低的时候，心率分次、呼吸分次）；病程；同上；病程：查体；护理单-尿管/出量（尿管、尿液）",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "date",
-          "notes": "低灌注的病人要护士去记录每小时数值",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m13_神经功能障碍",
-      "name": "神经功能障碍",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "评分表"
-      ],
-      "fields": [
+          "notes": "自动提取",
+          "sourceSystems": ["EMR/门诊病历"]
+        },
         {
-          "id": "f042_神经功能障碍_无",
-          "moduleId": "m13_神经功能障碍",
-          "module": "神经功能障碍",
-          "label": "无",
+          "id": "f050_手术牙位",
+          "moduleId": "m12_牙周手术",
+          "module": "牙周手术记录",
+          "label": "手术牙位",
           "options": [],
-          "dataSource": "昏迷评分表",
-          "rootSource": "",
+          "dataSource": "门诊病历-手术记录",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "manual",
-          "rawInputMode": "需要手选",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "评分表"
-          ]
+          "notes": "FDI标记法，如16-14或右上后牙区",
+          "sourceSystems": ["EMR/门诊病历"]
         },
         {
-          "id": "f043_神经功能障碍_有",
-          "moduleId": "m13_神经功能障碍",
-          "module": "神经功能障碍",
-          "label": "有",
-          "options": [
-            "Glassgow评分",
-            "瞳孔"
-          ],
-          "dataSource": "昏迷评分表；病程体格检查",
-          "rootSource": "",
+          "id": "f051_术后用药",
+          "moduleId": "m12_牙周手术",
+          "module": "牙周手术记录",
+          "label": "术后全身用药",
+          "options": ["未使用", "阿莫西林+甲硝唑", "多西环素", "克林霉素", "其他"],
+          "dataSource": "门诊病历-处方记录",
+          "rootSource": "EMR/门诊病历",
           "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "评分表"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m14_血液系统功能障碍",
-      "name": "血液系统功能障碍",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "LIS/检验"
-      ],
-      "fields": [
-        {
-          "id": "f044_血液系统功能障碍_无",
-          "moduleId": "m14_血液系统功能障碍",
-          "module": "血液系统功能障碍",
-          "label": "无",
-          "options": [],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "manual",
-          "rawInputMode": "需要手选",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f045_血液系统功能障碍_有",
-          "moduleId": "m14_血液系统功能障碍",
-          "module": "血液系统功能障碍",
-          "label": "有",
-          "options": [
-            "血小板计数      ×109/L",
-            "APTT        s",
-            "INR",
-            "FDP",
-            "纤维蛋白原",
-            "D-Dimers"
-          ],
-          "dataSource": "检验信息-血常规；检验信息-凝血功能",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m15_肾脏功能障碍",
-      "name": "肾脏功能障碍",
-      "fieldCount": 3,
-      "sourceSystems": [
-        "LIS/检验"
-      ],
-      "fields": [
-        {
-          "id": "f046_肾脏功能障碍_无",
-          "moduleId": "m15_肾脏功能障碍",
-          "module": "肾脏功能障碍",
-          "label": "无",
-          "options": [],
-          "dataSource": "检验信息-生化",
-          "rootSource": "",
-          "inputMode": "manual",
-          "rawInputMode": "需要手选",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f047_肾脏功能障碍_有",
-          "moduleId": "m15_肾脏功能障碍",
-          "module": "肾脏功能障碍",
-          "label": "有",
-          "options": [
-            "血肌酐     umoL/L；",
-            "血尿素氮     umoL/L；"
-          ],
-          "dataSource": "检验信息-生化",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "rawInputMode": "自动提取",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h",
-          "moduleId": "m15_肾脏功能障碍",
-          "module": "肾脏功能障碍",
-          "label": "足量液体复苏后尿量<0.5 ml／(kg·h)，持续至少2 h",
-          "options": [
-            "无",
-            "有"
-          ],
-          "dataSource": "检验信息-生化",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
+          "notes": "自动从处方记录中提取",
+          "sourceSystems": ["EMR/门诊病历"]
         }
       ]
     },
     {
-      "id": "m16_消化功能障碍",
-      "name": "消化功能障碍",
-      "fieldCount": 3,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ],
+      "id": "m13_随访复查",
+      "name": "随访复查",
+      "fieldCount": 5,
+      "sourceSystems": ["随访", "牙周检查表", "EMR/门诊病历"],
       "fields": [
         {
-          "id": "f049_消化功能障碍_无",
-          "moduleId": "m16_消化功能障碍",
-          "module": "消化功能障碍",
-          "label": "无",
+          "id": "f052_3月复查日期",
+          "moduleId": "m13_随访复查",
+          "module": "随访复查",
+          "label": "3个月复查日期",
           "options": [],
-          "dataSource": "检验信息-生化",
-          "rootSource": "",
+          "dataSource": "随访记录 / 门诊挂号",
+          "rootSource": "随访",
           "inputMode": "manual",
-          "rawInputMode": "需要手选",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "text",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f050_消化功能障碍_有",
-          "moduleId": "m16_消化功能障碍",
-          "module": "消化功能障碍",
-          "label": "有",
-          "options": [
-            "总胆红素    μmoL/L；",
-            "ALT       mmoL/L；"
-          ],
-          "dataSource": "检验信息-生化",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f051_消化功能障碍_肠鸣音消失",
-          "moduleId": "m16_消化功能障碍",
-          "module": "消化功能障碍",
-          "label": "肠鸣音消失",
-          "options": [
-            "无",
-            "有"
-          ],
-          "dataSource": "人为查体判断-病程",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "boolean",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m17_原发感染部位",
-      "name": "原发感染部位",
-      "fieldCount": 4,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ],
-      "fields": [
-        {
-          "id": "f052_原发感染部位_具体疾病名称",
-          "moduleId": "m17_原发感染部位",
-          "module": "原发感染部位",
-          "label": "具体疾病名称",
-          "options": [
-            "呼吸道",
-            "腹部",
-            "心血管",
-            "血液",
-            "中枢神经系统",
-            "泌尿系统疾病",
-            "皮肤",
-            "其他"
-          ],
-          "dataSource": "病程里面有诊断，出院诊断会有所有感染名称；病程",
-          "rootSource": "检验-肺泡灌洗液是否有细菌或病毒",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "判断微生物名称里面排除掉无或者未检出；项目名称-样本名关联",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f053_原发感染部位_原发疾病诊断日期",
-          "moduleId": "m17_原发感染部位",
-          "module": "原发感染部位",
-          "label": "原发疾病诊断日期",
-          "options": [],
-          "dataSource": "所有病程（第一次出现脓毒症的日期）",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "date",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "如未到时间或失访则留空",
+          "sourceSystems": ["随访", "EMR/门诊病历"]
         },
         {
-          "id": "f054_原发感染部位_病原来源",
-          "moduleId": "m17_原发感染部位",
-          "module": "原发感染部位",
-          "label": "病原来源",
-          "options": [
-            "血液",
-            "尿液",
-            "脑脊液",
-            "呼吸系统（痰液、支气管肺泡灌洗）",
-            "粪便",
-            "胸腔积液",
-            "心包积液",
-            "腹水",
-            "伤口"
-          ],
-          "dataSource": "病程",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f055_原发感染部位_具体病原结果",
-          "moduleId": "m17_原发感染部位",
-          "module": "原发感染部位",
-          "label": "具体病原结果",
-          "options": [
-            "细菌（1肺炎链球菌2流感嗜血杆菌3金黄葡萄球菌4假单胞菌属5表皮葡萄球菌6克雷白杆菌7阴沟杆菌8大肠杆菌9溶血性链球菌10鲍曼不动杆菌11其他）",
-            "病毒（1呼吸道合胞病毒（RSV）2巨细胞病毒（CMV）3柯萨奇病毒4腺病毒5流感病毒6EB病毒7其它）",
-            "真菌（1白色念珠菌2曲霉菌属3其它）",
-            "其他（1支原体2衣原体3寄生虫4其它"
-          ],
-          "dataSource": "检验",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m18_入ICU1小时内PIM3评分",
-      "name": "入ICU1小时内PIM3评分",
-      "fieldCount": 10,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "护理/监护",
-        "来源待确认"
-      ],
-      "fields": [
-        {
-          "id": "f056_入ICU1小时内PIM3评分_收缩压",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "收缩压",
-          "options": [
-            "mmHg"
-          ],
-          "dataSource": "入院时间-护理记录",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f053_3月PD变化",
+          "moduleId": "m13_随访复查",
+          "module": "随访复查",
+          "label": "3个月 PD 均值变化（mm）",
+          "options": [],
+          "dataSource": "随访-牙周检查对比",
+          "rootSource": "随访",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "护理/监护"
-          ]
+          "notes": "与基线比对，正值=改善(PD减小),负值=恶化",
+          "sourceSystems": ["随访", "牙周检查表"]
         },
         {
-          "id": "f057_入ICU1小时内PIM3评分_瞳孔反射",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "瞳孔反射",
-          "options": [
-            "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）"
-          ],
-          "dataSource": "入院时间-病程记录",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "［Fio2×100］/PaO2",
-          "options": [
-            "（如果Fio2 或 Pao2未知，则[(Fio2 × 100)/Pao2] = 0.23）"
-          ],
-          "dataSource": "血气分析",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f059_入ICU1小时内PIM3评分_碱剩余",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "碱剩余",
-          "options": [
-            "mmol/L（未知计分0）"
-          ],
-          "dataSource": "血气分析",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "入PICU1小时内是否使用机械通气",
-          "options": [
-            "（未用＝0，使用＝1）"
-          ],
-          "dataSource": "入院时间-病程记录",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护"
-          ]
-        },
-        {
-          "id": "f061_入ICU1小时内PIM3评分_是否为选择性入ICU",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "是否为选择性入ICU",
-          "options": [
-            "（否＝0，是＝1）"
-          ],
-          "dataSource": "",
-          "rootSource": "",
-          "inputMode": "unknown",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "来源待确认"
-          ]
-        },
-        {
-          "id": "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "是否为外科或其他操作后恢复期病例",
-          "options": [
-            "［0］不是",
-            "［1］是，心脏旁路手术的恢复",
-            "［2］是，非心脏旁路手术的恢复",
-            "［3］是，非心脏手术的恢复"
-          ],
-          "dataSource": "手动评分",
-          "rootSource": "",
-          "inputMode": "unknown",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "来源待确认"
-          ]
-        },
-        {
-          "id": "f063_入ICU1小时内PIM3评分_低危诊断",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "低危诊断",
-          "options": [
-            "［0］无",
-            "［1］哮喘为入ICU主要原因",
-            "［2］毛细支气管炎为入ICU主要原因",
-            "［3］喉气管支气管炎为入ICU主要原因",
-            "［4］阻塞性睡眠呼吸暂停为入ICU主要原因",
-            "［5］糖尿病酮症酸中毒为入ICU主要原因",
-            "［6］惊厥为入ICU主要原因"
-          ],
-          "dataSource": "手动评分",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        },
-        {
-          "id": "f064_入ICU1小时内PIM3评分_高危诊断",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "高危诊断",
-          "options": [
-            "［0］无",
-            "［1］自发性脑出血",
-            "［2］心肌病或心肌炎",
-            "［3］左心发育不全综合症",
-            "［4］神经退行性疾病",
-            "［5］坏死性小肠结肠炎为入PICU主要原因"
-          ],
-          "dataSource": "手动评分",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        },
-        {
-          "id": "f065_入ICU1小时内PIM3评分_极高风险诊断",
-          "moduleId": "m18_入ICU1小时内PIM3评分",
-          "module": "入ICU1小时内PIM3评分",
-          "label": "极高风险诊断",
-          "options": [
-            "［0］无",
-            "［1］入ICU前心脏骤停",
-            "［2］严重联合免疫缺陷",
-            "［3］第一次诱导后淋巴瘤或白血病",
-            "［4］骨髓移植受者",
-            "［5］肝衰竭为入住PICU主要原因"
-          ],
-          "dataSource": "手动评分",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m19_实验室检查",
-      "name": "实验室检查",
-      "fieldCount": 6,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ],
-      "fields": [
-        {
-          "id": "f066_实验室检查_血常规",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "血常规",
-          "options": [
-            "白细胞计数（WBC）",
-            "中性粒细胞%(NEUTP)",
-            "中性粒细胞计数(NEUT)",
-            "单核细胞%(MONOP)",
-            "单核细胞计数(MONON)",
-            "淋巴细胞%(LYMPHN)",
-            "淋巴细胞计数(LYMPHN)",
-            "红细胞计数（RBC）",
-            "血红蛋白（Hb）",
-            "网织红细胞计数",
-            "有核红细胞%",
-            "有核红细胞计数",
-            "红细胞分布宽度CV",
-            "红细胞压积(HCT)",
-            "平均血红蛋白浓度",
-            "平均红细胞体积(MCV)",
-            "平均血红蛋白(MCH)",
-            "红细胞分布宽度-SD",
-            "血小板计数（PLT）",
-            "血小板压积(PCT)",
-            "血小板分布宽度(PDW)",
-            "平均血小板体积(MPV)",
-            "C-反应蛋白（CRP）"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "number",
-          "notes": "诊断脓毒症后的第一个结果",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f067_实验室检查_肝功能",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "肝功能",
-          "options": [
-            "丙氨酸氨基转移酶（ALT）",
-            "门冬氨酸氨基转移酶（AST）",
-            "γ-谷氨酰转肽酶（GGT",
-            "碱性磷酸酯酶（ALP）",
-            "总蛋白",
-            "白蛋白（ALB）",
-            "球蛋白",
-            "白蛋白/球蛋白",
-            "前白蛋白",
-            "总胆红素",
-            "直接胆红素",
-            "间接胆红素",
-            "甘油三酯",
-            "总胆固醇（TC）",
-            "载脂蛋白-A1",
-            "载脂蛋白-B",
-            "高密度脂蛋白胆固醇HDL",
-            "低密度脂蛋白胆固醇LDL"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f068_实验室检查_凝血功能",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "凝血功能",
-          "options": [
-            "凝血酶原时间（PT）",
-            "凝血酶时间（TT）",
-            "凝血酶原活动度（PTA）",
-            "活化部分凝血酶时间（APTT）",
-            "国际标准化比值（INR）",
-            "纤维蛋白原（FIB）",
-            "纤维蛋白(原)降解产物（FDP）",
-            "D-二聚体"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f054_6月复查日期",
+          "moduleId": "m13_随访复查",
+          "module": "随访复查",
+          "label": "6个月复查日期",
+          "options": [],
+          "dataSource": "随访记录 / 门诊挂号",
+          "rootSource": "随访",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "date",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
+          "notes": "如未到时间或失访则留空",
+          "sourceSystems": ["随访", "EMR/门诊病历"]
         },
         {
-          "id": "f069_实验室检查_电解质",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "电解质",
-          "options": [
-            "钾(K+)",
-            "钠(Na+)",
-            "氯(Cl-)",
-            "钙(Ca+)",
-            "磷（P）",
-            "镁（Mg）"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f070_实验室检查_血气分析",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "血气分析",
-          "options": [
-            "酸碱度（PH）",
-            "动脉血二氧化碳分压（PaCO2）",
-            "动脉血阳分压（PaO2）",
-            "碳酸氢根（HCO3-）",
-            "剩余碱（BE）",
-            "血乳酸"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        },
-        {
-          "id": "f071_实验室检查_甲状腺功能",
-          "moduleId": "m19_实验室检查",
-          "module": "实验室检查",
-          "label": "甲状腺功能",
-          "options": [
-            "三-碘甲腺原氨酸总量(TT3)",
-            "甲状腺素总量(TT4)",
-            "游离三-碘甲腺原氨酸(FT3)",
-            "游离甲状腺素(FT4)",
-            "促甲状腺激素(TSH)",
-            "促甲状腺激素释放激素(TRH)"
-          ],
-          "dataSource": "检验信息",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "LIS/检验"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m20_仪器检查",
-      "name": "仪器检查",
-      "fieldCount": 2,
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护",
-        "检查/PACS"
-      ],
-      "fields": [
-        {
-          "id": "f072_仪器检查_心电图",
-          "moduleId": "m20_仪器检查",
-          "module": "仪器检查",
-          "label": "心电图",
-          "options": [
-            "心率",
-            "PR间期",
-            "QRS间期",
-            "QT间期",
-            "QTcF间期",
-            "□窦性心律 □窦性心动过缓 □窦性心律不齐 □窦性心动过速\n□房性早搏 □房性心动过速 □心房扑动 □心房颤动\n□交界性早搏 □室上性心动过速 □室性早搏 □室性心动过速\n□心室扑动 □心室颤动 □室性自主心律\n□房室传导阻滞（I、II度I型、II度II型、III度）"
-          ],
-          "dataSource": "检查信息",
-          "rootSource": "EMR-心电图-心率（数值）；EMR-心电图（数值）；EMR-心电图-诊断（文字描述）",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f055_6月CAL变化",
+          "moduleId": "m13_随访复查",
+          "module": "随访复查",
+          "label": "6个月 CAL 均值变化（mm）",
+          "options": [],
+          "dataSource": "随访-牙周检查对比",
+          "rootSource": "随访",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "number",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "护理/监护",
-            "检查/PACS"
-          ]
+          "notes": "与基线比对",
+          "sourceSystems": ["随访", "牙周检查表"]
         },
         {
-          "id": "f073_仪器检查_影像学",
-          "moduleId": "m20_仪器检查",
-          "module": "仪器检查",
-          "label": "影像学",
-          "options": [
-            "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底"
-          ],
-          "dataSource": "检查信息-诊断印象",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
+          "id": "f056_12月结局",
+          "moduleId": "m13_随访复查",
+          "module": "随访复查",
+          "label": "12个月结局",
+          "options": ["稳定/改善", "部分进展", "明显恶化", "失访", "牙缺失", "未到随访时间"],
+          "dataSource": "随访-综合评估",
+          "rootSource": "随访",
+          "inputMode": "manual",
+          "rawInputMode": "手动输入",
           "annotationRequired": false,
           "rawAnnotation": "",
           "control": "select",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历",
-            "检查/PACS"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "m21_治疗",
-      "name": "治疗",
-      "fieldCount": 1,
-      "sourceSystems": [
-        "EMR/住院病历"
-      ],
-      "fields": [
-        {
-          "id": "f074_治疗_复苏或CPR",
-          "moduleId": "m21_治疗",
-          "module": "治疗",
-          "label": "复苏或CPR",
-          "options": [
-            "○是 ○否"
-          ],
-          "dataSource": "医嘱：心肺复苏术",
-          "rootSource": "",
-          "inputMode": "auto",
-          "rawInputMode": "",
-          "annotationRequired": false,
-          "rawAnnotation": "",
-          "control": "boolean",
-          "notes": "",
-          "sourceSystems": [
-            "EMR/住院病历"
-          ]
+          "notes": "基于12个月复查综合判定",
+          "sourceSystems": ["随访", "牙周检查表"]
         }
       ]
     }
   ],
   "fields": [
-    {
-      "id": "f001_PICU结局_今日出院",
-      "moduleId": "m01_PICU结局",
-      "module": "PICU结局",
-      "label": "今日出院",
-      "options": [
-        "存活"
-      ],
-      "dataSource": "出院病历，转归",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "手动输入",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "不确定，存在随访，离开以后回去的情况不确定",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "随访"
-      ]
-    },
-    {
-      "id": "f002_PICU结局_临床死亡",
-      "moduleId": "m01_PICU结局",
-      "module": "PICU结局",
-      "label": "临床死亡",
-      "options": [
-        "死亡"
-      ],
-      "dataSource": "出院病历：医嘱",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "手动输入",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "不确定",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f003_PICU结局_自动出院_危重放弃治疗_转院",
-      "moduleId": "m01_PICU结局",
-      "module": "PICU结局",
-      "label": "自动出院（危重放弃治疗；转院）",
-      "options": [
-        "放弃治疗后死亡",
-        "放弃治疗后存活"
-      ],
-      "dataSource": "住院病历：医嘱-自动出院\n同时满足门诊病历：诊断/现病史 包含死亡。\n如果回去死的只能随访，在系统上不会体现。；只能随访",
-      "rootSource": "",
-      "inputMode": "manual_unextractable",
-      "rawInputMode": "手动输入；手动输入（无法提取）",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "不确定",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "随访"
-      ]
-    },
-    {
-      "id": "f004_入PICU主要病因_疾病代码",
-      "moduleId": "m02_入PICU主要病因",
-      "module": "入PICU主要病因",
-      "label": "疾病代码",
-      "options": [
-        "呼吸系统疾病",
-        "心血管系统疾病（心衰+休克）",
-        "神经系统疾病",
-        "血液系统疾病",
-        "泌尿系统疾病",
-        "消化系统疾病",
-        "创伤",
-        "术后监护",
-        "各种危象",
-        "严重感染",
-        "代谢紊乱",
-        "皮肤",
-        "其他"
-      ],
-      "dataSource": "住院病历：诊断，入院初步诊断、转院诊断\n其他科转入的病人：转入记录-接科诊断",
-      "rootSource": "诊断里面有疾病代码，不需要手写，是结构化字段",
-      "inputMode": "review",
-      "rawInputMode": "自动提取诊断，然后手动分类；自动提取",
-      "annotationRequired": true,
-      "rawAnnotation": "需要标注",
-      "control": "select",
-      "notes": "诊断编码来源地方有初步入院、出院\n转入病人就是接科诊断\n直接入院的病人：初步诊断（未必明确，不提取）入院诊断和出院诊断。（取前三条）",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f005_入PICU已伴有疾病__引发的疾病_疾病代码",
-      "moduleId": "m03_入PICU已伴有疾病__引发的疾病",
-      "module": "入PICU已伴有疾病 （引发的疾病）",
-      "label": "疾病代码",
-      "options": [
-        "呼吸系统疾病",
-        "心血管系统疾病",
-        "神经系统疾病",
-        "血液系统疾病",
-        "泌尿系统疾病",
-        "消化系统疾病",
-        "免疫系统疾病",
-        "肿瘤",
-        "代谢性疾病",
-        "遗传性疾病",
-        "器官移植或干细胞移植",
-        "营养性疾病",
-        "其他",
-        "无"
-      ],
-      "dataSource": "既往史：门诊病历、住院病历；诊断：病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "有疾病还没好",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f006_基础疾病__本来就存在的疾病_无",
-      "moduleId": "m04_基础疾病__本来就存在的疾病",
-      "module": "基础疾病 （本来就存在的疾病）",
-      "label": "无",
-      "options": [],
-      "dataSource": "",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "手动输入",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "有疾病已经好了",
-      "sourceSystems": [
-        "来源待确认"
-      ]
-    },
-    {
-      "id": "f007_基础疾病__本来就存在的疾病_有",
-      "moduleId": "m04_基础疾病__本来就存在的疾病",
-      "module": "基础疾病 （本来就存在的疾病）",
-      "label": "有",
-      "options": [
-        "呼吸系统疾病",
-        "心血管系统疾病",
-        "神经系统疾病",
-        "血液系统疾病",
-        "泌尿系统疾病",
-        "消化系统疾病",
-        "免疫系统疾病",
-        "肿瘤",
-        "代谢性疾病",
-        "遗传性疾病",
-        "营养性疾病",
-        "其他"
-      ],
-      "dataSource": "既往史-健康状况：门诊病历、住院病历；诊断",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "会有明确写出疾病的名称",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f008_免疫抑制_无",
-      "moduleId": "m05_免疫抑制",
-      "module": "免疫抑制",
-      "label": "无",
-      "options": [],
-      "dataSource": "既往史：门诊病历、住院病历；诊断：本次病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f009_免疫抑制_有",
-      "moduleId": "m05_免疫抑制",
-      "module": "免疫抑制",
-      "label": "有",
-      "options": [
-        "血液/实体肿瘤/化疗/骨髓移植/Car-T（同一类，血液病）",
-        "实体器官移植",
-        "原发性免疫缺陷",
-        "结缔组织病/风湿免疫",
-        "HIV",
-        "结核感染活动",
-        "其他"
-      ],
-      "dataSource": "既往史：门诊病历、住院病历；诊断：本次病历",
-      "rootSource": "提取困难，病历里面没有免疫抑制的字眼；要看病史",
-      "inputMode": "manual",
-      "rawInputMode": "手动输入",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "具体的确认方法",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f010_家族史_无",
-      "moduleId": "m06_家族史",
-      "module": "家族史",
-      "label": "无",
-      "options": [],
-      "dataSource": "家族史：住院病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f011_家族史_有",
-      "moduleId": "m06_家族史",
-      "module": "家族史",
-      "label": "有",
-      "options": [
-        "习惯性流产史",
-        "先心病病史",
-        "肾病病史",
-        "高血压病病史",
-        "糖尿病病史",
-        "肿瘤病史",
-        "冠心病病史",
-        "耳聋家族史",
-        "癫痫病史",
-        "精神病史",
-        "其他"
-      ],
-      "dataSource": "家族史：住院病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f012_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_无",
-      "moduleId": "m07_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分",
-      "module": "脓毒症（纳入标准：感染+SIRS，脓毒症诊断标准：感染＋PSS评分）",
-      "label": "无",
-      "options": [],
-      "dataSource": "有无诊断",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f013_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分_有",
-      "moduleId": "m07_脓毒症_纳入标准_感染_SIRS_脓毒症诊断标准_感染_PSS评分",
-      "module": "脓毒症（纳入标准：感染+SIRS，脓毒症诊断标准：感染＋PSS评分）",
-      "label": "有",
-      "options": [
-        "纳入日期",
-        "出院时是否诊断",
-        "诊断日期"
-      ],
-      "dataSource": "诊断对应病历的日期；出院诊断有无包含脓毒症，这次住院是否有包含脓毒症；不确定",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "date",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f014_SIRS_炎症反应_体温",
-      "moduleId": "m08_SIRS_炎症反应",
-      "module": "SIRS（炎症反应）",
-      "label": "体温",
-      "options": [
-        "正常",
-        "发热（≥38.5℃）或低体温（≤36℃）"
-      ],
-      "dataSource": "有符合脓毒症的护理记录单上",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "监护仪",
-      "sourceSystems": [
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f015_SIRS_炎症反应_心动过速",
-      "moduleId": "m08_SIRS_炎症反应",
-      "module": "SIRS（炎症反应）",
-      "label": "心动过速",
-      "options": [
-        "无，不超过120",
-        "有"
-      ],
-      "dataSource": "心率：护理单",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "boolean",
-      "notes": "监护仪",
-      "sourceSystems": [
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f016_SIRS_炎症反应_呼吸增加",
-      "moduleId": "m08_SIRS_炎症反应",
-      "module": "SIRS（炎症反应）",
-      "label": "呼吸增加",
-      "options": [
-        "无",
-        "有"
-      ],
-      "dataSource": "每分钟呼吸次数：护理单",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "boolean",
-      "notes": "监护仪",
-      "sourceSystems": [
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f017_SIRS_炎症反应_白细胞",
-      "moduleId": "m08_SIRS_炎症反应",
-      "module": "SIRS（炎症反应）",
-      "label": "白细胞",
-      "options": [
-        "正常：数值",
-        "白细胞增多（>12×109/L）",
-        "白细胞减少（<4×109/L）"
-      ],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "血常规",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f018_感染指标_CRP",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "CRP",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f019_感染指标_PCT",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "PCT",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验",
-        "检查/PACS"
-      ]
-    },
-    {
-      "id": "f020_感染指标_IL_1",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "IL-1",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f021_感染指标_IL_2",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "IL-2",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f022_感染指标_IL_6",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "IL-6",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f023_感染指标_IL_8",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "IL-8",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f024_感染指标_IL_10",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "IL-10",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f025_感染指标_TNF_α",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "TNF-α",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f026_感染指标_INF_γ",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "INF-γ",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f027_感染指标_1_3_β_D葡聚糖",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "（1,3）-β-D葡聚糖",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f028_感染指标_GM",
-      "moduleId": "m09_感染指标",
-      "module": "感染指标",
-      "label": "GM",
-      "options": [],
-      "dataSource": "血常规检验单，lis检验检查结果",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f029_PSS评分_呼吸",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "呼吸",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "监护仪",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f030_PSS评分_血管活性药物",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "血管活性药物",
-      "options": [
-        "肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺"
-      ],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "病程中有没有提及",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f031_PSS评分_平均动脉压",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "平均动脉压",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "监护仪",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f032_PSS评分_乳酸",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "乳酸",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "血气分析-LAC；床边血气仪器（数据自动上传）",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f033_PSS评分_循环",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "循环",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "不确定",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f034_PSS评分_凝血",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "凝血",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "凝血检验LIS-EMR",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f035_PSS评分_神经",
-      "moduleId": "m10_PSS评分",
-      "module": "PSS评分",
-      "label": "神经",
-      "options": [],
-      "dataSource": "PSS评分表（必须手填的一个表，可以直接从EMR上面提取）此表单来源病历",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "昏迷评分表，只能人为",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f036_呼吸功能障碍_低氧血症",
-      "moduleId": "m11_呼吸功能障碍",
-      "module": "呼吸功能障碍",
-      "label": "低氧血症",
-      "options": [
-        "吸氧时：P/F(Pa02／Fi02 ) =     mmHg;"
-      ],
-      "dataSource": "血气检验单",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "吸氧时候测量",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f037_呼吸功能障碍_机械通气",
-      "moduleId": "m11_呼吸功能障碍",
-      "module": "呼吸功能障碍",
-      "label": "机械通气",
-      "options": [
-        "无创机械通气：P/F =   mmHg",
-        "无创机械通气：S/F比 =",
-        "有创机械通气：OI指数="
-      ],
-      "dataSource": "血气检验单",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f038_呼吸功能障碍_有创机械通气_OIS指数",
-      "moduleId": "m11_呼吸功能障碍",
-      "module": "呼吸功能障碍",
-      "label": "有创机械通气：OIS指数=",
-      "options": [
-        "有创机械通气：OIS指数="
-      ],
-      "dataSource": "血气检验单",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f039_呼吸功能障碍_ARDS",
-      "moduleId": "m11_呼吸功能障碍",
-      "module": "呼吸功能障碍",
-      "label": "ARDS",
-      "options": [
-        "无",
-        "PaO2   mmHg, FiO2   %，PaO2/FiO2   mmHg,",
-        "PaCO2     mmHg，SpO2      %，Paw",
-        "无创通气：P/F比      ，S/F比（P/F无法获取时填写）",
-        "有创机械通气：氧指数（OI）     ， 氧饱和度指数（OSI）（OI无法获取时填写）      ；"
-      ],
-      "dataSource": "血气检验单",
-      "rootSource": "手动选择",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "1.做成范围值\n2.如果是转入病人（病程记录有转入日期），6-7小时以内的血气单时间",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f040_心血管功能障碍_低血压_护理单上血压最低时候",
-      "moduleId": "m12_心血管功能障碍",
-      "module": "心血管功能障碍",
-      "label": "低血压（护理单上血压最低时候）",
-      "options": [
-        "无",
-        "有血管活性药：肾上腺素、去甲肾上腺素、特利加压素、多巴胺、多巴酚丁胺",
-        "高乳酸血症：数值",
-        "毛细血管再充盈时间或CRT延长（≥2s）",
-        "皮肤花斑/花纹"
-      ],
-      "dataSource": "住院病历：住院医嘱中的临时医嘱，来源医嘱系统；血气经验单；病程里面；病历体格检查、病程",
-      "rootSource": "对应血压低的时候；血压最低时候的乳酸，血压来源监护仪；血压最低时候，6小时内对应的值",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": true,
-      "rawAnnotation": "要",
-      "control": "date",
-      "notes": "血压最低（重症护理记录单，监护仪数据实时导入），往后12小时之内的乳酸值，如果多次取最高的；CRT常规在大病历中才有；血压低的时候要求大家在病程中把这些内容写出来",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验",
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f041_心血管功能障碍_低灌注_低血压的时候是否有低灌注表显",
-      "moduleId": "m12_心血管功能障碍",
-      "module": "心血管功能障碍",
-      "label": "低灌注（低血压的时候是否有低灌注表显）",
-      "options": [
-        "心率、脉搏变化：外周动脉搏动细弱，心率、脉搏增快；",
-        "皮肤改变：面色苍白或苍灰，湿冷，大理石样花纹。如暖休克可表现为四肢温暖、皮肤干燥。",
-        "毛细血管再充盈时间（CRT）延长（>2s）（需除外环境温度影响）",
-        "意识改变：早期烦躁不安或萎靡，表情淡漠。晚期意识模糊，甚至昏迷、惊厥。",
-        "液体复苏后尿量<0.5 ml／(kg·h)，持续至少2h"
-      ],
-      "dataSource": "重症护理单（血压低的时候，心率分次、呼吸分次）；病程；同上；病程：查体；护理单-尿管/出量（尿管、尿液）",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "date",
-      "notes": "低灌注的病人要护士去记录每小时数值",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f042_神经功能障碍_无",
-      "moduleId": "m13_神经功能障碍",
-      "module": "神经功能障碍",
-      "label": "无",
-      "options": [],
-      "dataSource": "昏迷评分表",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "需要手选",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "评分表"
-      ]
-    },
-    {
-      "id": "f043_神经功能障碍_有",
-      "moduleId": "m13_神经功能障碍",
-      "module": "神经功能障碍",
-      "label": "有",
-      "options": [
-        "Glassgow评分",
-        "瞳孔"
-      ],
-      "dataSource": "昏迷评分表；病程体格检查",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "评分表"
-      ]
-    },
-    {
-      "id": "f044_血液系统功能障碍_无",
-      "moduleId": "m14_血液系统功能障碍",
-      "module": "血液系统功能障碍",
-      "label": "无",
-      "options": [],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "需要手选",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f045_血液系统功能障碍_有",
-      "moduleId": "m14_血液系统功能障碍",
-      "module": "血液系统功能障碍",
-      "label": "有",
-      "options": [
-        "血小板计数      ×109/L",
-        "APTT        s",
-        "INR",
-        "FDP",
-        "纤维蛋白原",
-        "D-Dimers"
-      ],
-      "dataSource": "检验信息-血常规；检验信息-凝血功能",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f046_肾脏功能障碍_无",
-      "moduleId": "m15_肾脏功能障碍",
-      "module": "肾脏功能障碍",
-      "label": "无",
-      "options": [],
-      "dataSource": "检验信息-生化",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "需要手选",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f047_肾脏功能障碍_有",
-      "moduleId": "m15_肾脏功能障碍",
-      "module": "肾脏功能障碍",
-      "label": "有",
-      "options": [
-        "血肌酐     umoL/L；",
-        "血尿素氮     umoL/L；"
-      ],
-      "dataSource": "检验信息-生化",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f048_肾脏功能障碍_足量液体复苏后尿量_0_5_ml_kg_h_持续至少2_h",
-      "moduleId": "m15_肾脏功能障碍",
-      "module": "肾脏功能障碍",
-      "label": "足量液体复苏后尿量<0.5 ml／(kg·h)，持续至少2 h",
-      "options": [
-        "无",
-        "有"
-      ],
-      "dataSource": "检验信息-生化",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f049_消化功能障碍_无",
-      "moduleId": "m16_消化功能障碍",
-      "module": "消化功能障碍",
-      "label": "无",
-      "options": [],
-      "dataSource": "检验信息-生化",
-      "rootSource": "",
-      "inputMode": "manual",
-      "rawInputMode": "需要手选",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "text",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f050_消化功能障碍_有",
-      "moduleId": "m16_消化功能障碍",
-      "module": "消化功能障碍",
-      "label": "有",
-      "options": [
-        "总胆红素    μmoL/L；",
-        "ALT       mmoL/L；"
-      ],
-      "dataSource": "检验信息-生化",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f051_消化功能障碍_肠鸣音消失",
-      "moduleId": "m16_消化功能障碍",
-      "module": "消化功能障碍",
-      "label": "肠鸣音消失",
-      "options": [
-        "无",
-        "有"
-      ],
-      "dataSource": "人为查体判断-病程",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "boolean",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f052_原发感染部位_具体疾病名称",
-      "moduleId": "m17_原发感染部位",
-      "module": "原发感染部位",
-      "label": "具体疾病名称",
-      "options": [
-        "呼吸道",
-        "腹部",
-        "心血管",
-        "血液",
-        "中枢神经系统",
-        "泌尿系统疾病",
-        "皮肤",
-        "其他"
-      ],
-      "dataSource": "病程里面有诊断，出院诊断会有所有感染名称；病程",
-      "rootSource": "检验-肺泡灌洗液是否有细菌或病毒",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "判断微生物名称里面排除掉无或者未检出；项目名称-样本名关联",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f053_原发感染部位_原发疾病诊断日期",
-      "moduleId": "m17_原发感染部位",
-      "module": "原发感染部位",
-      "label": "原发疾病诊断日期",
-      "options": [],
-      "dataSource": "所有病程（第一次出现脓毒症的日期）",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "date",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f054_原发感染部位_病原来源",
-      "moduleId": "m17_原发感染部位",
-      "module": "原发感染部位",
-      "label": "病原来源",
-      "options": [
-        "血液",
-        "尿液",
-        "脑脊液",
-        "呼吸系统（痰液、支气管肺泡灌洗）",
-        "粪便",
-        "胸腔积液",
-        "心包积液",
-        "腹水",
-        "伤口"
-      ],
-      "dataSource": "病程",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f055_原发感染部位_具体病原结果",
-      "moduleId": "m17_原发感染部位",
-      "module": "原发感染部位",
-      "label": "具体病原结果",
-      "options": [
-        "细菌（1肺炎链球菌2流感嗜血杆菌3金黄葡萄球菌4假单胞菌属5表皮葡萄球菌6克雷白杆菌7阴沟杆菌8大肠杆菌9溶血性链球菌10鲍曼不动杆菌11其他）",
-        "病毒（1呼吸道合胞病毒（RSV）2巨细胞病毒（CMV）3柯萨奇病毒4腺病毒5流感病毒6EB病毒7其它）",
-        "真菌（1白色念珠菌2曲霉菌属3其它）",
-        "其他（1支原体2衣原体3寄生虫4其它"
-      ],
-      "dataSource": "检验",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f056_入ICU1小时内PIM3评分_收缩压",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "收缩压",
-      "options": [
-        "mmHg"
-      ],
-      "dataSource": "入院时间-护理记录",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f057_入ICU1小时内PIM3评分_瞳孔反射",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "瞳孔反射",
-      "options": [
-        "（>3mm和双侧瞳孔固定计分1，其他或者未知计分0）"
-      ],
-      "dataSource": "入院时间-病程记录",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f058_入ICU1小时内PIM3评分_Fio2_100_PaO2",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "［Fio2×100］/PaO2",
-      "options": [
-        "（如果Fio2 或 Pao2未知，则[(Fio2 × 100)/Pao2] = 0.23）"
-      ],
-      "dataSource": "血气分析",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f059_入ICU1小时内PIM3评分_碱剩余",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "碱剩余",
-      "options": [
-        "mmol/L（未知计分0）"
-      ],
-      "dataSource": "血气分析",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f060_入ICU1小时内PIM3评分_入PICU1小时内是否使用机械通气",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "入PICU1小时内是否使用机械通气",
-      "options": [
-        "（未用＝0，使用＝1）"
-      ],
-      "dataSource": "入院时间-病程记录",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护"
-      ]
-    },
-    {
-      "id": "f061_入ICU1小时内PIM3评分_是否为选择性入ICU",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "是否为选择性入ICU",
-      "options": [
-        "（否＝0，是＝1）"
-      ],
-      "dataSource": "",
-      "rootSource": "",
-      "inputMode": "unknown",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "来源待确认"
-      ]
-    },
-    {
-      "id": "f062_入ICU1小时内PIM3评分_是否为外科或其他操作后恢复期病例",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "是否为外科或其他操作后恢复期病例",
-      "options": [
-        "［0］不是",
-        "［1］是，心脏旁路手术的恢复",
-        "［2］是，非心脏旁路手术的恢复",
-        "［3］是，非心脏手术的恢复"
-      ],
-      "dataSource": "手动评分",
-      "rootSource": "",
-      "inputMode": "unknown",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "来源待确认"
-      ]
-    },
-    {
-      "id": "f063_入ICU1小时内PIM3评分_低危诊断",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "低危诊断",
-      "options": [
-        "［0］无",
-        "［1］哮喘为入ICU主要原因",
-        "［2］毛细支气管炎为入ICU主要原因",
-        "［3］喉气管支气管炎为入ICU主要原因",
-        "［4］阻塞性睡眠呼吸暂停为入ICU主要原因",
-        "［5］糖尿病酮症酸中毒为入ICU主要原因",
-        "［6］惊厥为入ICU主要原因"
-      ],
-      "dataSource": "手动评分",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f064_入ICU1小时内PIM3评分_高危诊断",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "高危诊断",
-      "options": [
-        "［0］无",
-        "［1］自发性脑出血",
-        "［2］心肌病或心肌炎",
-        "［3］左心发育不全综合症",
-        "［4］神经退行性疾病",
-        "［5］坏死性小肠结肠炎为入PICU主要原因"
-      ],
-      "dataSource": "手动评分",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f065_入ICU1小时内PIM3评分_极高风险诊断",
-      "moduleId": "m18_入ICU1小时内PIM3评分",
-      "module": "入ICU1小时内PIM3评分",
-      "label": "极高风险诊断",
-      "options": [
-        "［0］无",
-        "［1］入ICU前心脏骤停",
-        "［2］严重联合免疫缺陷",
-        "［3］第一次诱导后淋巴瘤或白血病",
-        "［4］骨髓移植受者",
-        "［5］肝衰竭为入住PICU主要原因"
-      ],
-      "dataSource": "手动评分",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    },
-    {
-      "id": "f066_实验室检查_血常规",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "血常规",
-      "options": [
-        "白细胞计数（WBC）",
-        "中性粒细胞%(NEUTP)",
-        "中性粒细胞计数(NEUT)",
-        "单核细胞%(MONOP)",
-        "单核细胞计数(MONON)",
-        "淋巴细胞%(LYMPHN)",
-        "淋巴细胞计数(LYMPHN)",
-        "红细胞计数（RBC）",
-        "血红蛋白（Hb）",
-        "网织红细胞计数",
-        "有核红细胞%",
-        "有核红细胞计数",
-        "红细胞分布宽度CV",
-        "红细胞压积(HCT)",
-        "平均血红蛋白浓度",
-        "平均红细胞体积(MCV)",
-        "平均血红蛋白(MCH)",
-        "红细胞分布宽度-SD",
-        "血小板计数（PLT）",
-        "血小板压积(PCT)",
-        "血小板分布宽度(PDW)",
-        "平均血小板体积(MPV)",
-        "C-反应蛋白（CRP）"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "诊断脓毒症后的第一个结果",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f067_实验室检查_肝功能",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "肝功能",
-      "options": [
-        "丙氨酸氨基转移酶（ALT）",
-        "门冬氨酸氨基转移酶（AST）",
-        "γ-谷氨酰转肽酶（GGT",
-        "碱性磷酸酯酶（ALP）",
-        "总蛋白",
-        "白蛋白（ALB）",
-        "球蛋白",
-        "白蛋白/球蛋白",
-        "前白蛋白",
-        "总胆红素",
-        "直接胆红素",
-        "间接胆红素",
-        "甘油三酯",
-        "总胆固醇（TC）",
-        "载脂蛋白-A1",
-        "载脂蛋白-B",
-        "高密度脂蛋白胆固醇HDL",
-        "低密度脂蛋白胆固醇LDL"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f068_实验室检查_凝血功能",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "凝血功能",
-      "options": [
-        "凝血酶原时间（PT）",
-        "凝血酶时间（TT）",
-        "凝血酶原活动度（PTA）",
-        "活化部分凝血酶时间（APTT）",
-        "国际标准化比值（INR）",
-        "纤维蛋白原（FIB）",
-        "纤维蛋白(原)降解产物（FDP）",
-        "D-二聚体"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "date",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f069_实验室检查_电解质",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "电解质",
-      "options": [
-        "钾(K+)",
-        "钠(Na+)",
-        "氯(Cl-)",
-        "钙(Ca+)",
-        "磷（P）",
-        "镁（Mg）"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f070_实验室检查_血气分析",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "血气分析",
-      "options": [
-        "酸碱度（PH）",
-        "动脉血二氧化碳分压（PaCO2）",
-        "动脉血阳分压（PaO2）",
-        "碳酸氢根（HCO3-）",
-        "剩余碱（BE）",
-        "血乳酸"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f071_实验室检查_甲状腺功能",
-      "moduleId": "m19_实验室检查",
-      "module": "实验室检查",
-      "label": "甲状腺功能",
-      "options": [
-        "三-碘甲腺原氨酸总量(TT3)",
-        "甲状腺素总量(TT4)",
-        "游离三-碘甲腺原氨酸(FT3)",
-        "游离甲状腺素(FT4)",
-        "促甲状腺激素(TSH)",
-        "促甲状腺激素释放激素(TRH)"
-      ],
-      "dataSource": "检验信息",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "LIS/检验"
-      ]
-    },
-    {
-      "id": "f072_仪器检查_心电图",
-      "moduleId": "m20_仪器检查",
-      "module": "仪器检查",
-      "label": "心电图",
-      "options": [
-        "心率",
-        "PR间期",
-        "QRS间期",
-        "QT间期",
-        "QTcF间期",
-        "□窦性心律 □窦性心动过缓 □窦性心律不齐 □窦性心动过速\n□房性早搏 □房性心动过速 □心房扑动 □心房颤动\n□交界性早搏 □室上性心动过速 □室性早搏 □室性心动过速\n□心室扑动 □心室颤动 □室性自主心律\n□房室传导阻滞（I、II度I型、II度II型、III度）"
-      ],
-      "dataSource": "检查信息",
-      "rootSource": "EMR-心电图-心率（数值）；EMR-心电图（数值）；EMR-心电图-诊断（文字描述）",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "number",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "护理/监护",
-        "检查/PACS"
-      ]
-    },
-    {
-      "id": "f073_仪器检查_影像学",
-      "moduleId": "m20_仪器检查",
-      "module": "仪器检查",
-      "label": "影像学",
-      "options": [
-        "○aEEG○EEG○CT○X光○超声○TCD○MRI○TDI○MRS○MRA○MRV\n○近红外光谱（NIRS）○AABR○TEOAE○眼底"
-      ],
-      "dataSource": "检查信息-诊断印象",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "select",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历",
-        "检查/PACS"
-      ]
-    },
-    {
-      "id": "f074_治疗_复苏或CPR",
-      "moduleId": "m21_治疗",
-      "module": "治疗",
-      "label": "复苏或CPR",
-      "options": [
-        "○是 ○否"
-      ],
-      "dataSource": "医嘱：心肺复苏术",
-      "rootSource": "",
-      "inputMode": "auto",
-      "rawInputMode": "",
-      "annotationRequired": false,
-      "rawAnnotation": "",
-      "control": "boolean",
-      "notes": "",
-      "sourceSystems": [
-        "EMR/住院病历"
-      ]
-    }
+    { "id": "f001_年龄", "moduleId": "m01_基本信息", "module": "基本信息", "label": "年龄", "options": [], "dataSource": "门诊病历/挂号信息", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "自动从挂号系统中提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f002_性别", "moduleId": "m01_基本信息", "module": "基本信息", "label": "性别", "options": ["男", "女"], "dataSource": "门诊病历/挂号信息", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "自动从挂号系统中提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f003_首诊日期", "moduleId": "m01_基本信息", "module": "基本信息", "label": "牙周科首诊日期", "options": [], "dataSource": "门诊挂号记录/就诊日期", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "首次牙周科挂号日期", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f004_牙周主诉", "moduleId": "m01_基本信息", "module": "基本信息", "label": "牙周主诉", "options": ["牙龈出血", "牙齿松动", "牙龈退缩", "口腔异味", "咀嚼无力", "牙龈肿胀/溢脓", "其他"], "dataSource": "门诊病历主诉/现病史", "rootSource": "EMR/门诊病历", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "text", "notes": "可从门诊病历中提取，需人工复核确认", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f005_刷牙频率", "moduleId": "m02_口腔卫生习惯", "module": "口腔卫生习惯", "label": "每日刷牙频率", "options": ["≥2次/天", "1次/天", "偶尔/不规律", "不刷牙"], "dataSource": "牙周检查表-口腔卫生问诊", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "患者自述，需在检查时手动记录", "sourceSystems": ["牙周检查表"] },
+    { "id": "f006_牙线使用", "moduleId": "m02_口腔卫生习惯", "module": "口腔卫生习惯", "label": "牙线/牙缝刷使用", "options": ["每日使用", "偶尔使用", "从不使用"], "dataSource": "牙周检查表-口腔卫生问诊", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "评估邻面清洁习惯", "sourceSystems": ["牙周检查表"] },
+    { "id": "f007_漱口水使用", "moduleId": "m02_口腔卫生习惯", "module": "口腔卫生习惯", "label": "漱口水使用", "options": ["规律使用", "偶尔使用", "不使用"], "dataSource": "牙周检查表-口腔卫生问诊", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "", "sourceSystems": ["牙周检查表"] },
+    { "id": "f008_最近洁治", "moduleId": "m02_口腔卫生习惯", "module": "口腔卫生习惯", "label": "最近一次洁治时间", "options": ["<6个月", "6-12个月", "1-3年", ">3年/从未"], "dataSource": "牙周检查表-口腔卫生问诊 / EMR治疗记录", "rootSource": "牙周检查表", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "可从EMR治疗记录中提取，无记录时手动问询", "sourceSystems": ["牙周检查表", "EMR/门诊病历"] },
+    { "id": "f009_吸烟史", "moduleId": "m03_危险因素", "module": "危险因素与全身背景", "label": "吸烟史", "options": ["从不吸烟", "已戒烟", "当前吸烟"], "dataSource": "门诊病历-个人史 / 牙周检查表", "rootSource": "EMR/门诊病历", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "可从门诊病史提取，无记录时手动补录", "sourceSystems": ["EMR/门诊病历", "牙周检查表"] },
+    { "id": "f010_吸烟量", "moduleId": "m03_危险因素", "module": "危险因素与全身背景", "label": "每日吸烟量（支/天）", "options": ["不适用", "<10支", "10-20支", ">20支"], "dataSource": "牙周检查表-吸烟量问诊", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "仅当前吸烟或已戒烟者填写", "sourceSystems": ["牙周检查表"] },
+    { "id": "f011_糖尿病史", "moduleId": "m03_危险因素", "module": "危险因素与全身背景", "label": "糖尿病史", "options": ["无", "糖尿病前期", "2型糖尿病(控制良好)", "2型糖尿病(控制不佳)", "1型糖尿病"], "dataSource": "门诊病历-既往史 / LIS/检验", "rootSource": "EMR/门诊病历", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "结合既往史和检验结果综合判断", "sourceSystems": ["EMR/门诊病历", "LIS/检验"] },
+    { "id": "f012_HbA1c", "moduleId": "m03_危险因素", "module": "危险因素与全身背景", "label": "糖化血红蛋白 HbA1c（%）", "options": [], "dataSource": "LIS/检验-糖化血红蛋白", "rootSource": "LIS/检验", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "自动从LIS提取最近一次结果", "sourceSystems": ["LIS/检验"] },
+    { "id": "f013_家族史", "moduleId": "m03_危险因素", "module": "危险因素与全身背景", "label": "牙周病家族史", "options": ["无", "父母有牙周病史", "兄弟姐妹有牙周病史", "不详"], "dataSource": "牙周检查表-家族史问诊", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "需手动询问记录", "sourceSystems": ["牙周检查表"] },
+    { "id": "f014_PD均值", "moduleId": "m04_牙周探诊_全口均值", "module": "牙周探诊（全口均值）", "label": "探诊深度均值 PD（mm）", "options": [], "dataSource": "牙周电子探针/牙周检查表-全口探诊", "rootSource": "牙周电子探针", "inputMode": "file_review", "rawInputMode": "设备文件复核", "annotationRequired": true, "rawAnnotation": "需保留电子探针原始报告并人工复核", "control": "number", "notes": "由电子探针自动计算，需复核异常值", "sourceSystems": ["牙周电子探针", "牙周检查表"] },
+    { "id": "f015_CAL均值", "moduleId": "m04_牙周探诊_全口均值", "module": "牙周探诊（全口均值）", "label": "临床附着丧失均值 CAL（mm）", "options": [], "dataSource": "牙周电子探针/牙周检查表-全口探诊", "rootSource": "牙周电子探针", "inputMode": "file_review", "rawInputMode": "设备文件复核", "annotationRequired": true, "rawAnnotation": "需保留电子探针原始报告并人工复核", "control": "number", "notes": "由电子探针自动计算，需复核异常值", "sourceSystems": ["牙周电子探针", "牙周检查表"] },
+    { "id": "f016_BOP阳性率", "moduleId": "m04_牙周探诊_全口均值", "module": "牙周探诊（全口均值）", "label": "探诊出血阳性率 BOP（%）", "options": [], "dataSource": "牙周检查表-全口探诊出血", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "BOP阳性位点数÷检查位点总数×100%", "sourceSystems": ["牙周检查表"] },
+    { "id": "f017_REC均值", "moduleId": "m04_牙周探诊_全口均值", "module": "牙周探诊（全口均值）", "label": "牙龈退缩均值 REC（mm）", "options": [], "dataSource": "牙周电子探针/牙周检查表", "rootSource": "牙周电子探针", "inputMode": "file_review", "rawInputMode": "设备文件复核", "annotationRequired": true, "rawAnnotation": "需保留电子探针原始报告并人工复核", "control": "number", "notes": "", "sourceSystems": ["牙周电子探针", "牙周检查表"] },
+    { "id": "f018_PDge5mm位点数", "moduleId": "m04_牙周探诊_全口均值", "module": "牙周探诊（全口均值）", "label": "PD≥5mm 位点数", "options": [], "dataSource": "牙周检查表-全口探诊统计", "rootSource": "牙周检查表", "inputMode": "review", "rawInputMode": "自动统计+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "用于分期判定，需人工确认", "sourceSystems": ["牙周检查表"] },
+    { "id": "f019_最大PD", "moduleId": "m05_牙周探诊_最重位点", "module": "牙周探诊（最重位点）", "label": "最大探诊深度（mm）", "options": [], "dataSource": "牙周检查表-全口探诊最重值", "rootSource": "牙周检查表", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "", "sourceSystems": ["牙周检查表", "牙周电子探针"] },
+    { "id": "f020_最大CAL", "moduleId": "m05_牙周探诊_最重位点", "module": "牙周探诊（最重位点）", "label": "最大临床附着丧失（mm）", "options": [], "dataSource": "牙周检查表-全口探诊最重值", "rootSource": "牙周检查表", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "", "sourceSystems": ["牙周检查表", "牙周电子探针"] },
+    { "id": "f021_最大REC", "moduleId": "m05_牙周探诊_最重位点", "module": "牙周探诊（最重位点）", "label": "最大牙龈退缩（mm）", "options": [], "dataSource": "牙周检查表-全口探诊最重值", "rootSource": "牙周检查表", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "", "sourceSystems": ["牙周检查表", "牙周电子探针"] },
+    { "id": "f022_最重牙位", "moduleId": "m05_牙周探诊_最重位点", "module": "牙周探诊（最重位点）", "label": "牙周破坏最重牙位", "options": [], "dataSource": "牙周检查表-全口探诊最重值", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "text", "notes": "FDI牙位标记法，如46/36", "sourceSystems": ["牙周检查表"] },
+    { "id": "f023_PLI", "moduleId": "m06_菌斑炎症指数", "module": "菌斑与炎症指数", "label": "菌斑指数 PLI", "options": ["0", "1", "2", "3"], "dataSource": "牙周检查表-菌斑指数评估", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "Silness & Löe 菌斑指数: 0=无菌斑,1=探针可刮出,2=肉眼可见,3=大量软垢", "sourceSystems": ["牙周检查表"] },
+    { "id": "f024_GI", "moduleId": "m06_菌斑炎症指数", "module": "菌斑与炎症指数", "label": "牙龈指数 GI", "options": ["0", "1", "2", "3"], "dataSource": "牙周检查表-牙龈指数评估", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "Löe & Silness 牙龈指数: 0=正常,1=轻度炎症,2=中度炎症,3=重度炎症", "sourceSystems": ["牙周检查表"] },
+    { "id": "f025_OHIS", "moduleId": "m06_菌斑炎症指数", "module": "菌斑与炎症指数", "label": "简化口腔卫生指数 OHI-S", "options": [], "dataSource": "牙周检查表-简化口腔卫生指数", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "DI-S + CI-S，范围0~6，分数越高卫生越差", "sourceSystems": ["牙周检查表"] },
+    { "id": "f026_BI", "moduleId": "m06_菌斑炎症指数", "module": "菌斑与炎症指数", "label": "出血指数 BI", "options": ["0", "1", "2", "3", "4", "5"], "dataSource": "牙周检查表-出血指数", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "Mazza出血指数: 0=健康,5=自发出血", "sourceSystems": ["牙周检查表"] },
+    { "id": "f027_松动度", "moduleId": "m07_松动度与根分叉", "module": "牙松动度与根分叉病变", "label": "最重牙松动度", "options": ["无松动", "I度（水平<1mm）", "II度（水平1-2mm）", "III度（水平>2mm+垂直）"], "dataSource": "牙周检查表-松动度检查", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "", "sourceSystems": ["牙周检查表"] },
+    { "id": "f028_根分叉病变", "moduleId": "m07_松动度与根分叉", "module": "牙松动度与根分叉病变", "label": "最重根分叉病变 FI", "options": ["无", "I度", "II度", "III度", "IV度"], "dataSource": "牙周检查表-根分叉检查 / CBCT", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "Hamp分度: I=水平丧失≤3mm, II=>3mm未通, III=贯通, IV=贯通且牙龈退缩", "sourceSystems": ["牙周检查表", "影像/PACS"] },
+    { "id": "f029_根分叉受累牙数", "moduleId": "m07_松动度与根分叉", "module": "牙松动度与根分叉病变", "label": "根分叉受累牙数", "options": [], "dataSource": "牙周检查表-根分叉统计", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "FI≥II度牙位计数", "sourceSystems": ["牙周检查表"] },
+    { "id": "f030_咬合创伤", "moduleId": "m07_松动度与根分叉", "module": "牙松动度与根分叉病变", "label": "咬合创伤", "options": ["无", "有（原发性）", "有（继发性）"], "dataSource": "牙周检查表-咬合检查", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "结合松动度、X线及咬合检查综合判断", "sourceSystems": ["牙周检查表", "影像/PACS"] },
+    { "id": "f031_影像类型", "moduleId": "m08_影像学", "module": "影像学检查", "label": "影像检查类型", "options": ["全景片(OPG)", "CBCT", "根尖片", "咬翼片"], "dataSource": "检查/PACS", "rootSource": "影像/PACS", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "自动从PACS影像类型提取", "sourceSystems": ["影像/PACS"] },
+    { "id": "f032_骨吸收程度", "moduleId": "m08_影像学", "module": "影像学检查", "label": "牙槽骨吸收程度", "options": ["无或轻微（<15%）", "轻中度（15%-33%）", "中重度（>33%）", "重度伴垂直骨缺损"], "dataSource": "影像/PACS 放射报告 / CBCT分析", "rootSource": "影像/PACS", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "参考放射科报告，牙周科医生复核确认", "sourceSystems": ["影像/PACS"] },
+    { "id": "f033_骨缺损形态", "moduleId": "m08_影像学", "module": "影像学检查", "label": "骨缺损形态", "options": ["水平吸收", "垂直吸收", "混合型", "漏斗形/环形"], "dataSource": "影像/PACS 放射报告 / CBCT分析", "rootSource": "影像/PACS", "inputMode": "file_review", "rawInputMode": "设备文件复核", "annotationRequired": true, "rawAnnotation": "需保留CBCT/全景片源文件并人工读片确认", "control": "select", "notes": "", "sourceSystems": ["影像/PACS"] },
+    { "id": "f034_骨丧失百分比", "moduleId": "m08_影像学", "module": "影像学检查", "label": "牙槽骨丧失百分比（最重位点）", "options": [], "dataSource": "CBCT分析/ 全景片测量", "rootSource": "影像/PACS", "inputMode": "file_review", "rawInputMode": "设备文件复核", "annotationRequired": true, "rawAnnotation": "需在PACS/CBCT软件中测量并截图留证", "control": "number", "notes": "用于分期: I期<15%, II期15-33%, III-IV期>33%根长", "sourceSystems": ["影像/PACS"] },
+    { "id": "f035_余留牙数", "moduleId": "m08_影像学", "module": "影像学检查", "label": "余留牙数", "options": [], "dataSource": "口内扫描仪/影像/PACS", "rootSource": "口内扫描仪", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "不含第三磨牙，自动统计", "sourceSystems": ["口内扫描仪", "影像/PACS"] },
+    { "id": "f036_牙周诊断类型", "moduleId": "m09_牙周诊断", "module": "牙周诊断与分型分期", "label": "牙周诊断类型", "options": ["牙龈炎", "慢性牙周炎", "侵袭性牙周炎", "牙周-牙髓联合病变", "坏死性牙周病", "牙周脓肿", "牙龈退缩"], "dataSource": "门诊病历-诊断 / 牙周检查表", "rootSource": "EMR/门诊病历", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "ICD编码可从诊断记录提取", "sourceSystems": ["EMR/门诊病历", "牙周检查表"] },
+    { "id": "f037_分期", "moduleId": "m09_牙周诊断", "module": "牙周诊断与分型分期", "label": "牙周炎分期（2018 AAP）", "options": ["不适用（非牙周炎）", "I期（初期）", "II期（中度）", "III期（重度伴牙缺失）", "IV期（晚期伴咀嚼功能丧失）"], "dataSource": "牙周检查表-分期综合评估", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "基于最大CAL、骨丧失、牙缺失数综合判定", "sourceSystems": ["牙周检查表", "影像/PACS"] },
+    { "id": "f038_分级", "moduleId": "m09_牙周诊断", "module": "牙周诊断与分型分期", "label": "牙周炎分级（2018 AAP）", "options": ["不适用", "A级（缓慢进展）", "B级（中速进展）", "C级（快速进展）"], "dataSource": "牙周检查表-分级综合评估", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "基于骨丧失/年龄比值、病例表型、危险因素综合判定", "sourceSystems": ["牙周检查表", "LIS/检验"] },
+    { "id": "f039_诊断依据", "moduleId": "m09_牙周诊断", "module": "牙周诊断与分型分期", "label": "关键诊断依据", "options": [], "dataSource": "综合评估", "rootSource": "", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "text", "notes": "自由文本，简述分期分级的核心依据", "sourceSystems": ["牙周检查表", "影像/PACS", "LIS/检验"] },
+    { "id": "f040_治疗阶段", "moduleId": "m10_治疗计划", "module": "治疗计划", "label": "当前治疗阶段", "options": ["初诊评估", "基础治疗(I期)", "再评估", "牙周手术(II期)", "修复/正畸(III期)", "维护期(IV期)"], "dataSource": "门诊病历-治疗计划", "rootSource": "EMR/门诊病历", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f041_基础治疗内容", "moduleId": "m10_治疗计划", "module": "治疗计划", "label": "基础治疗计划内容", "options": ["口腔卫生宣教(OHI)", "全口洁治", "龈下刮治+根面平整(SRP)", "拔除无保留价值患牙", "龋病/牙体治疗", "药物治疗"], "dataSource": "门诊病历-治疗计划", "rootSource": "EMR/门诊病历", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "text", "notes": "可多选，自由文本记录", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f042_手术指征", "moduleId": "m10_治疗计划", "module": "治疗计划", "label": "牙周手术指征", "options": ["无手术指征", "有（PD≥5mm持续）", "有（根分叉II度以上）", "有（骨缺损需再生）", "有（牙冠延长/美学）"], "dataSource": "牙周检查表-治疗决策", "rootSource": "牙周检查表", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "基础治疗后再评估后判定", "sourceSystems": ["牙周检查表"] },
+    { "id": "f043_维护间隔", "moduleId": "m10_治疗计划", "module": "治疗计划", "label": "建议维护期间隔", "options": ["1个月", "3个月", "6个月", "12个月", "暂不确定"], "dataSource": "门诊病历-医嘱", "rootSource": "EMR/门诊病历", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "基于风险评估: 低风险=12月, 中风险=6月, 高风险=3月", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f044_洁治日期", "moduleId": "m11_基础治疗", "module": "基础治疗记录", "label": "全口洁治完成日期", "options": [], "dataSource": "门诊病历-治疗记录 / 收费记录", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "自动从治疗记录/收费系统中提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f045_SRP日期", "moduleId": "m11_基础治疗", "module": "基础治疗记录", "label": "龈下刮治+根面平整(SRP)完成日期", "options": [], "dataSource": "门诊病历-治疗记录", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "自动提取最后一次SRP治疗日期", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f046_SRP象限数", "moduleId": "m11_基础治疗", "module": "基础治疗记录", "label": "SRP 治疗象限数", "options": ["1", "2", "3", "4（全口）", "不适用"], "dataSource": "门诊病历-治疗记录", "rootSource": "EMR/门诊病历", "inputMode": "review", "rawInputMode": "自动提取+人工确认", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f047_局部用药", "moduleId": "m11_基础治疗", "module": "基础治疗记录", "label": "牙周局部用药", "options": ["未使用", "米诺环素凝胶", "多西环素凝胶", "氯己定冲洗", "其他抗生素"], "dataSource": "门诊病历-治疗记录", "rootSource": "EMR/门诊病历", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f048_手术类型", "moduleId": "m12_牙周手术", "module": "牙周手术记录", "label": "牙周手术类型", "options": ["未行手术", "翻瓣清创(OFD)", "牙周再生术(GTR)", "牙冠延长术", "牙龈移植/根面覆盖", "牙周成形术"], "dataSource": "门诊病历-手术记录", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "自动从手术记录中提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f049_手术日期", "moduleId": "m12_牙周手术", "module": "牙周手术记录", "label": "手术日期", "options": [], "dataSource": "门诊病历-手术记录 / 收费记录", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "自动提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f050_手术牙位", "moduleId": "m12_牙周手术", "module": "牙周手术记录", "label": "手术牙位", "options": [], "dataSource": "门诊病历-手术记录", "rootSource": "EMR/门诊病历", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "text", "notes": "FDI标记法，如16-14或右上后牙区", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f051_术后用药", "moduleId": "m12_牙周手术", "module": "牙周手术记录", "label": "术后全身用药", "options": ["未使用", "阿莫西林+甲硝唑", "多西环素", "克林霉素", "其他"], "dataSource": "门诊病历-处方记录", "rootSource": "EMR/门诊病历", "inputMode": "auto", "rawInputMode": "自动提取", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "自动从处方记录中提取", "sourceSystems": ["EMR/门诊病历"] },
+    { "id": "f052_3月复查日期", "moduleId": "m13_随访复查", "module": "随访复查", "label": "3个月复查日期", "options": [], "dataSource": "随访记录 / 门诊挂号", "rootSource": "随访", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "如未到时间或失访则留空", "sourceSystems": ["随访", "EMR/门诊病历"] },
+    { "id": "f053_3月PD变化", "moduleId": "m13_随访复查", "module": "随访复查", "label": "3个月 PD 均值变化（mm）", "options": [], "dataSource": "随访-牙周检查对比", "rootSource": "随访", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "与基线比对，正值=改善(PD减小),负值=恶化", "sourceSystems": ["随访", "牙周检查表"] },
+    { "id": "f054_6月复查日期", "moduleId": "m13_随访复查", "module": "随访复查", "label": "6个月复查日期", "options": [], "dataSource": "随访记录 / 门诊挂号", "rootSource": "随访", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "date", "notes": "如未到时间或失访则留空", "sourceSystems": ["随访", "EMR/门诊病历"] },
+    { "id": "f055_6月CAL变化", "moduleId": "m13_随访复查", "module": "随访复查", "label": "6个月 CAL 均值变化（mm）", "options": [], "dataSource": "随访-牙周检查对比", "rootSource": "随访", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "number", "notes": "与基线比对", "sourceSystems": ["随访", "牙周检查表"] },
+    { "id": "f056_12月结局", "moduleId": "m13_随访复查", "module": "随访复查", "label": "12个月结局", "options": ["稳定/改善", "部分进展", "明显恶化", "失访", "牙缺失", "未到随访时间"], "dataSource": "随访-综合评估", "rootSource": "随访", "inputMode": "manual", "rawInputMode": "手动输入", "annotationRequired": false, "rawAnnotation": "", "control": "select", "notes": "基于12个月复查综合判定", "sourceSystems": ["随访", "牙周检查表"] }
   ]
 } satisfies CrfTemplate;

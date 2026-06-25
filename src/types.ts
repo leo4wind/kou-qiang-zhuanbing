@@ -242,7 +242,7 @@ export interface ScreeningCandidate {
 
 export interface LifecycleEvent {
   id: string;
-  stage: "门诊" | "住院" | "PICU" | "出院" | "随访";
+  stage: "门诊" | "住院" | "牙周科" | "出院" | "随访";
   time: string;
   title: string;
   description: string;

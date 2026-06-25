@@ -140,7 +140,7 @@ function openDetail(caseRecord: CaseRecord) {
       <el-card v-if="showAnalysisPanels" shadow="never" class="work-card">
         <template #header>
           <div class="panel-title">
-            <strong>PICU 结局分布</strong>
+            <strong>牙周治疗结局分布</strong>
             <el-tag effect="plain">{{ currentQueryTemplate?.exportPreset }}</el-tag>
           </div>
         </template>
